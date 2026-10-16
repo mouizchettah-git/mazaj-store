@@ -13,29 +13,17 @@
   <style>
     body { font-family: 'Readex Pro', 'Outfit', sans-serif; }
     h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
-    button, a, input, select, textarea, .glass-card {
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    button, a, .glass-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
 
-  <!-- الهيدر العلوي المتجاوب -->
+  <!-- الهيدر العلوي المتجاوب والمرتب يميناً ويساراً بشكل صحيح -->
   <header class="w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-4 py-3">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
       
-      <!-- معلومات التواصل والعنوان -->
-      <div class="flex items-center justify-center sm:justify-start gap-4 text-xs sm:text-sm text-slate-300 flex-wrap">
-        <span class="flex items-center gap-1.5 bg-slate-800/60 px-3 py-1 rounded-full border border-slate-700/50">
-          <i class="fa-solid fa-location-dot text-amber-500"></i> حي المصالة، بسكرة
-        </span>
-        <span class="flex items-center gap-1.5 bg-slate-800/60 px-3 py-1 rounded-full border border-slate-700/50">
-          <i class="fa-solid fa-phone text-amber-500"></i> 0778624582
-        </span>
-      </div>
-
-      <!-- أدوات التحكم والشعار المصغر -->
-      <div class="flex items-center gap-3">
+      <!-- أزرار التحكم (اللغة، الثيم) في أقصى اليمين أو اليسار بتنسيق نظيف -->
+      <div class="flex items-center gap-2">
         <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-full text-xs font-medium border border-slate-700 flex items-center gap-1.5">
           <i class="fa-solid fa-globe text-amber-500"></i> العربية
         </button>
@@ -44,10 +32,20 @@
         </button>
       </div>
 
+      <!-- معلومات التواصل والعنوان في الجهة المقابلة -->
+      <div class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-slate-300">
+        <span class="flex items-center gap-1 bg-slate-800/60 px-2.5 py-1 rounded-full border border-slate-700/50">
+          <span class="hidden sm:inline">حي المصالة،</span> بسكرة <i class="fa-solid fa-location-dot text-amber-500"></i>
+        </span>
+        <span class="flex items-center gap-1 bg-slate-800/60 px-2.5 py-1 rounded-full border border-slate-700/50">
+          0778624582 <i class="fa-solid fa-phone text-amber-500"></i>
+        </span>
+      </div>
+
     </div>
   </header>
 
-  <!-- القسم الرئيسي للمحتوى -->
+  <!-- القسم الرئيسي للكاتالوج -->
   <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-8">
 
     <!-- شريط العنوان والترحيب -->
@@ -63,14 +61,14 @@
       </p>
     </section>
 
-    <!-- الفئات (Tabs) -->
+    <!-- الفئات (Tabs) مرتبة ومنتظمة -->
     <div class="flex items-center justify-center gap-2 flex-wrap">
       <button class="bg-amber-500 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-500/20">الكل</button>
       <button class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium px-5 py-2 rounded-xl text-xs sm:text-sm border border-slate-800">تحليات وكيك</button>
       <button class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium px-5 py-2 rounded-xl text-xs sm:text-sm border border-slate-800">عصائر طبيعية</button>
     </div>
 
-    <!-- شبكة المنتجات المتجاوبة -->
+    <!-- شبكة المنتجات (كاتالوج عرض فقط بدون أزرار طلب مزعجة) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       
       <!-- منتج 1 -->
@@ -82,13 +80,11 @@
         <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between space-y-3">
           <div class="space-y-1">
             <h3 class="text-base sm:text-lg font-bold text-slate-100">عصير فواكه استوائية طازج</h3>
-            <p class="text-slate-400 text-xs line-clamp-2">مزيج طازج طبيعي 100% من المانجو والأاناناس والفراولة.</p>
+            <p class="text-slate-400 text-xs line-clamp-2">مزيج طازج طبيعي 100% من المانجو والأناناس والفراولة.</p>
           </div>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-slate-400 text-xs">السعر</span>
             <span class="text-amber-400 font-extrabold text-base sm:text-lg">400 دج</span>
-            <button class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5">
-              <i class="fa-solid fa-cart-shopping"></i> طلب
-            </button>
           </div>
         </div>
       </div>
@@ -104,11 +100,9 @@
             <h3 class="text-base sm:text-lg font-bold text-slate-100">كعكة الشوكولاتة والمكسرات</h3>
             <p class="text-slate-400 text-xs line-clamp-2">طبقات شوكولاتة فاخرة مغطاة بالمكسرات المحمصة.</p>
           </div>
-          <div class="flex items-center justify-between pt-2 border-t border-slate-800/80">
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-slate-400 text-xs">السعر</span>
             <span class="text-amber-400 font-extrabold text-base sm:text-lg">2,500 دج</span>
-            <button class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5">
-              <i class="fa-solid fa-cart-shopping"></i> طلب
-            </button>
           </div>
         </div>
       </div>
@@ -117,13 +111,13 @@
 
   </main>
 
-  <!-- الفوتر (Footer) مرتب ونظيف بدون تداخل -->
+  <!-- الفوتر (Footer) -->
   <footer class="bg-slate-900 border-t border-slate-800 mt-12 py-8 px-4 text-center space-y-4">
     <div class="max-w-4xl mx-auto space-y-3">
       <h2 class="text-lg font-extrabold text-slate-100">مزاج | MAZAJ</h2>
       <p class="text-slate-400 text-xs max-w-md mx-auto">شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلي أوقاتك في بسكرة.</p>
       
-      <!-- وسائل التواصل معدلة ومرتبة بالوسط بشكل أنيق جداً -->
+      <!-- وسائل التواصل -->
       <div class="flex items-center justify-center gap-4 pt-2">
         <a href="#" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500"><i class="fa-brands fa-instagram text-sm"></i></a>
         <a href="#" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500"><i class="fa-brands fa-facebook-f text-sm"></i></a>
