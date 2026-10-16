@@ -3,609 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>مزاج | لوحة التحكم Admin</title>
+  <title>لوحة التحكم | مزاج | Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Readex Pro', 'Outfit', sans-serif; }
     h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
-    [lang="en"] body, [lang="fr"] body { font-family: 'Outfit', sans-serif; }
-
-    /* Clean targeted transitions - No text selection bugs */
     button, a, input, select, textarea, .glass-card {
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    .glass-nav {
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-    .light .glass-nav {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .glass-card {
-      background: rgba(30, 41, 59, 0.7);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .light .glass-card {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(217, 119, 6, 0.2);
-    }
-
-    .custom-dropdown { position: relative; user-select: none; }
-    .custom-dropdown-menu {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      right: 0;
-      min-width: 140px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-8px) scale(0.95);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 50;
-    }
-    .custom-dropdown.open .custom-dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0) scale(1);
-    }
-
-    .theme-spin { animation: spinOnce 0.4s ease-out; }
-    @keyframes spinOnce { 0% { transform: rotate(0deg) scale(0.8); } 100% { transform: rotate(360deg) scale(1); } }
   </style>
 </head>
-<body class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-800 dark:text-slate-100 flex flex-col antialiased selection:bg-amber-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
 
-  <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-amber-950 via-amber-900 to-slate-950 text-amber-100 text-xs sm:text-sm py-2.5 px-4 shadow-sm border-b border-amber-800/40">
-    <div class="max-w-7xl mx-auto flex flex-row justify-between items-center gap-2">
-      <div class="flex items-center gap-3 sm:gap-4">
-        <span class="flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> <a href="#" id="top-phone" class="hover:underline font-bold" dir="ltr">0778624582</a></span>
-        <a id="top-map-link" href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-1.5 bg-amber-800/50 hover:bg-amber-700/80 text-amber-200 px-3.5 py-1 rounded-full text-xs font-semibold border border-amber-600/40 hover:scale-105">
-          <i class="fa-solid fa-map-location-dot text-amber-400"></i> <span id="top-address">حي الزمالة، بسكرة</span> ↗
-        </a>
-        <span class="bg-amber-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm" id="badge-admin">لوحة الإدارة 🛠️</span>
+  <!-- هيدر لوحة التحكم -->
+  <header class="w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1 rounded-xl text-xs font-bold">Admin</span>
+        <h1 class="text-base sm:text-lg font-black text-slate-100">لوحة تحكم متجر مزاج</h1>
       </div>
-      
-      <div class="flex items-center gap-3 text-sm sm:text-base">
-        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
-        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400 hover:scale-110"><i class="fa-brands fa-facebook"></i></a>
-        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300 hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
-        <button onclick="openSettingsModal()" class="text-amber-300 hover:text-white text-xs font-semibold bg-amber-800/60 hover:bg-amber-700 px-3.5 py-1 rounded-xl transition-all border border-amber-600/30 flex items-center gap-1.5">
-          <i class="fa-solid fa-gear"></i> <span id="btn-edit-contact">تعديل التواصل</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Navigation Bar -->
-  <header class="sticky top-0 z-40 glass-nav border-b border-amber-200/50 dark:border-slate-800/80 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-orange-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-amber-500/20 hover:rotate-12">☕</div>
-        <div>
-          <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 luxury-title">مزاج <span class="text-amber-500 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 tracking-widest uppercase">ADMIN PANEL</span></h1>
-        </div>
-      </div>
-      
-      <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Language Dropdown -->
-        <div class="custom-dropdown" id="lang-dropdown">
-          <button onclick="toggleLangMenu(event)" class="bg-amber-100/80 dark:bg-slate-800/90 border border-amber-300/60 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs font-semibold py-2.5 px-3.5 rounded-2xl flex items-center gap-2 shadow-sm hover:border-amber-400">
-            <i class="fa-solid fa-globe text-amber-500"></i>
-            <span id="current-lang-label" class="font-bold">العربية</span>
-            <i class="fa-solid fa-chevron-down text-[10px] text-amber-500"></i>
-          </button>
-          <div class="custom-dropdown-menu glass-card bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-1.5 border border-slate-200 dark:border-slate-800">
-            <button onclick="changeLanguage('ar')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">العربية <span>🇸🇦</span></button>
-            <button onclick="changeLanguage('en')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">English <span>🇬🇧</span></button>
-            <button onclick="changeLanguage('fr')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">Français <span>🇫🇷</span></button>
-          </div>
-        </div>
-
-        <!-- Dark/Light Theme Switcher -->
-        <button onclick="toggleDarkMode()" class="p-2.5 rounded-2xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm">
-          <i id="theme-icon" class="fa-solid fa-moon text-base block"></i>
-        </button>
-
-        <button onclick="openProductModal()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-2xl shadow-md shadow-amber-500/20 flex items-center gap-2 hover:scale-105">
-          <i class="fa-solid fa-plus text-amber-100"></i> <span id="btn-add-product">إضافة منتج</span>
-        </button>
-
-        <a href="public.html" target="_blank" class="bg-slate-200/80 dark:bg-slate-800/90 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-2xl border border-slate-300 dark:border-slate-700 flex items-center gap-1.5">
-          <i class="fa-solid fa-eye"></i> <span id="btn-preview">المعاينة</span>
-        </a>
-      </div>
+      <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-700 flex items-center gap-1.5">
+        <i class="fa-solid fa-store text-amber-500"></i> عودة للمتجر
+      </a>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="max-w-7xl mx-auto px-4 pt-14 pb-6 text-center">
-    <span id="hero-badge" class="inline-block px-5 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 text-amber-700 dark:text-amber-300 font-bold text-xs mb-4 border border-amber-500/30 shadow-sm">
-      🛠️ لوحة الإدارة
-    </span>
-    <h2 id="hero-title" class="luxury-title text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-3">
-      إدارة تحليات وعصائر متجر مزاج ☕
-    </h2>
-  </section>
+  <!-- المحتوى الرئيسي للوحة التحكم -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-6">
+    
+    <!-- إحصائيات سريعة -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-xl flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400">إجمالي المنتجات</p>
+          <h4 class="text-2xl font-black text-slate-100 mt-1">12</h4>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg">
+          <i class="fa-solid fa-boxes-stacked"></i>
+        </div>
+      </div>
+      
+      <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-xl flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400">الطلبات النشطة</p>
+          <h4 class="text-2xl font-black text-slate-100 mt-1">3</h4>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg">
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+      </div>
 
-  <!-- Catalog Main Grid -->
-  <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
-    <div class="flex items-center gap-2.5 overflow-x-auto pb-4 scrollbar-none mb-10 justify-start sm:justify-center" id="categories-container"></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7" id="products-grid"></div>
+      <div class="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-xl flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400">الأقسام المتاحة</p>
+          <h4 class="text-2xl font-black text-slate-100 mt-1">2</h4>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- نموذج إضافة منتج جديد -->
+    <section class="bg-slate-900/80 p-5 sm:p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
+      <h2 class="text-base sm:text-lg font-bold text-slate-100 flex items-center gap-2">
+        <i class="fa-solid fa-circle-plus text-amber-500"></i> إضافة منتج جديد للمتجر
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="space-y-1">
+          <label class="text-xs text-slate-400 font-medium">اسم المنتج</label>
+          <input type="text" placeholder="مثال: عصير مانجو طبيعي" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+        </div>
+        <div class="space-y-1">
+          <label class="text-xs text-slate-400 font-medium">السعر (دج)</label>
+          <input type="number" placeholder="400" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+        </div>
+        <div class="space-y-1 sm:col-span-2">
+          <label class="text-xs text-slate-400 font-medium">رابط الصورة (Image URL)</label>
+          <input type="url" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+        </div>
+        <div class="space-y-1 sm:col-span-2">
+          <label class="text-xs text-slate-400 font-medium">وصف المنتج</label>
+          <textarea rows="3" placeholder="اكتب وصفاً قصيراً..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-amber-500"></textarea>
+        </div>
+      </div>
+      <button class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 w-full sm:w-auto">
+        <i class="fa-solid fa-check"></i> حفظ وإضافة المنتج
+      </button>
+    </section>
+
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-slate-950 text-slate-300 pt-10 pb-6 border-t border-slate-800/80 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 font-medium" id="footer-copy">
-      © 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra) | وضع التحكم الأدمن
-    </div>
+  <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-400">
+    <p>© 2026 لوحة التحكم - متجر مزاج (Mazaj Biskra)</p>
   </footer>
 
-  <!-- Modal 1: Add/Edit Product -->
-  <div id="product-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="glass-card bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 relative max-h-[92vh] overflow-y-auto text-slate-800 dark:text-slate-100">
-      <button onclick="closeProductModal()" class="absolute top-5 ltr:right-5 rtl:left-5 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 font-bold flex items-center justify-center">✕</button>
-      
-      <h3 id="modal-title" class="luxury-title text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-        <i class="fa-solid fa-pen-to-square text-amber-500"></i> <span id="modal-product-heading">تعديل المنتج</span>
-      </h3>
-
-      <form id="product-form" onsubmit="handleSaveProduct(event)" class="space-y-4 text-xs sm:text-sm">
-        <input type="hidden" id="p-id">
-        
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5" id="lbl-p-name">اسم المنتج *</label>
-          <input type="text" id="p-name" required class="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5" id="lbl-p-price">السعر (دج) *</label>
-            <input type="text" id="p-price" required class="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5" id="lbl-p-category">القسم *</label>
-            <select id="p-category" required class="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
-              <option value="تحليات وكيك" class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white py-2" id="opt-cat-1">تحليات وكيك</option>
-              <option value="عصائر طبيعية" class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white py-2" id="opt-cat-2">عصائر طبيعية</option>
-              <option value="شاي ومشروبات" class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white py-2" id="opt-cat-3">شاي ومشروبات</option>
-              <option value="مكسرات وسكريات" class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white py-2" id="opt-cat-4">مكسرات وسكريات</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5" id="lbl-p-img">صورة المنتج (PNG/JPG)</label>
-          <input type="file" id="p-image-file" accept="image/*" class="w-full px-3 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 file:mx-2 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-600 file:text-white hover:file:bg-amber-700 cursor-pointer">
-          <span id="p-image-hint" class="text-[10px] text-slate-400 dark:text-slate-500 block mt-1.5">اتركه فارغاً إذا كنت لا تريد تغيير الصورة الحالية عند التعديل</span>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1.5" id="lbl-p-desc">الوصف *</label>
-          <textarea id="p-desc" rows="3" required class="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed"></textarea>
-        </div>
-
-        <button type="submit" id="btn-save-p" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-amber-500/20 mt-2">
-          حفظ المنتج
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 2: Edit Contact Settings -->
-  <div id="settings-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="glass-card bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 relative text-slate-800 dark:text-slate-100 max-h-[92vh] overflow-y-auto">
-      <button onclick="closeSettingsModal()" class="absolute top-5 ltr:right-5 rtl:left-5 w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold flex items-center justify-center">✕</button>
-      <h3 class="luxury-title text-xl font-bold mb-6 border-b border-slate-200 dark:border-slate-800 pb-3 flex items-center gap-2">
-        <i class="fa-solid fa-gear text-amber-500"></i> <span id="modal-settings-heading">تعديل معلومات التواصل والسوشيال ميديا</span>
-      </h3>
-
-      <form onsubmit="handleSaveSettings(event)" class="space-y-4 text-xs sm:text-sm">
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1" id="lbl-s-phone">رقم الهاتف الظاهر</label>
-          <input type="text" id="s-phone" required class="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-        </div>
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">رابط Google Maps</label>
-          <input type="url" id="s-map" placeholder="https://maps.google.com/..." class="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-        </div>
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1"><i class="fa-brands fa-instagram text-pink-500"></i> رابط انستغرام (Instagram URL)</label>
-          <input type="url" id="s-ig" placeholder="https://instagram.com/..." class="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-        </div>
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1"><i class="fa-brands fa-facebook text-blue-600"></i> رابط فيسبوك (Facebook URL)</label>
-          <input type="url" id="s-fb" placeholder="https://facebook.com/..." class="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-        </div>
-        <div>
-          <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1"><i class="fa-brands fa-tiktok text-slate-800 dark:text-slate-200"></i> رابط تيك توك (TikTok URL)</label>
-          <input type="url" id="s-tk" placeholder="https://tiktok.com/@..." class="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-        </div>
-        <button type="submit" id="btn-save-s" class="w-full bg-amber-600 text-white font-bold py-3 rounded-2xl shadow-md mt-2 hover:bg-amber-700">
-          حفظ التغييرات
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const i18n = {
-      ar: {
-        adminBadge: "لوحة الإدارة 🛠️",
-        editContact: "تعديل التواصل",
-        addProduct: "إضافة منتج",
-        preview: "المعاينة",
-        heroBadge: "🛠️ لوحة الإدارة",
-        heroTitle: "إدارة تحليات وعصائر متجر مزاج ☕",
-        footerCopy: "© 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra) | وضع التحكم الأدمن",
-        modalProductHead: "تعديل المنتج",
-        modalSettingsHead: "تعديل معلومات التواصل والسوشيال ميديا",
-        lblPName: "اسم المنتج *",
-        lblPPrice: "السعر (دج) *",
-        lblPCat: "القسم *",
-        lblPImg: "صورة المنتج (PNG/JPG)",
-        pImgHint: "اتركه فارغاً إذا كنت لا تريد تغيير الصورة الحالية عند التعديل",
-        lblPDesc: "الوصف *",
-        btnSaveP: "حفظ المنتج",
-        lblSPhone: "رقم الهاتف الظاهر",
-        btnSaveS: "حفظ التغييرات",
-        adminPreview: "معاينة الأدمن",
-        noProducts: "لا توجد منتجات حالياً.",
-        confirmDelete: "هل أنت متأكد من حذف هذا المنتج؟",
-        mapBtn: "حي الزمالة، بسكرة",
-        allCat: "الكل",
-        cat1: "تحليات وكيك",
-        cat2: "عصائر طبيعية",
-        cat3: "شاي ومشروبات",
-        cat4: "مكسرات وسكريات"
-      },
-      en: {
-        adminBadge: "Admin Mode 🛠️",
-        editContact: "Edit Contact",
-        addProduct: "Add Product",
-        preview: "Preview",
-        heroBadge: "🛠️ Admin Panel",
-        heroTitle: "Mazaj Biskra Catalog Management ☕",
-        footerCopy: "© 2026 All Rights Reserved to Mazaj Shop (Mazaj Biskra) | Admin Mode",
-        modalProductHead: "Edit Product",
-        modalSettingsHead: "Edit Contact & Social Media",
-        lblPName: "Product Name *",
-        lblPPrice: "Price (DZD) *",
-        lblPCat: "Category *",
-        lblPImg: "Product Image (PNG/JPG)",
-        pImgHint: "Leave empty to keep current image during edit",
-        lblPDesc: "Description *",
-        btnSaveP: "Save Product",
-        lblSPhone: "Display Phone Number",
-        btnSaveS: "Save Changes",
-        adminPreview: "Admin View",
-        noProducts: "No products available currently.",
-        confirmDelete: "Are you sure you want to delete this product?",
-        mapBtn: "El Zamala, Biskra",
-        allCat: "All",
-        cat1: "Desserts & Cakes",
-        cat2: "Fresh Juices",
-        cat3: "Tea & Beverages",
-        cat4: "Nuts & Sweets"
-      },
-      fr: {
-        adminBadge: "Mode Admin 🛠️",
-        editContact: "Modifier Contact",
-        addProduct: "Ajouter Produit",
-        preview: "Aperçu",
-        heroBadge: "🛠️ Panneau d'administration",
-        heroTitle: "Gestion du Catalogue Mazaj Biskra ☕",
-        footerCopy: "© 2026 Tous droits réservés à Mazaj Shop (Mazaj Biskra) | Mode Admin",
-        modalProductHead: "Modifier le produit",
-        modalSettingsHead: "Modifier Contact & Réseaux Sociaux",
-        lblPName: "Nom du produit *",
-        lblPPrice: "Prix (DZD) *",
-        lblPCat: "Catégorie *",
-        lblPImg: "Image du produit (PNG/JPG)",
-        pImgHint: "Laissez vide pour conserver l'image actuelle lors de la modification",
-        lblPDesc: "Description *",
-        btnSaveP: "Enregistrer le produit",
-        lblSPhone: "Téléphone d'affichage",
-        btnSaveS: "Enregistrer les modifications",
-        adminPreview: "Aperçu Admin",
-        noProducts: "Aucun produit disponible actuellement.",
-        confirmDelete: "Êtes-vous sûr de vouloir supprimer ce produit?",
-        mapBtn: "El Zamala, Biskra",
-        allCat: "Tous",
-        cat1: "Desserts & Gâteaux",
-        cat2: "Jus Naturels",
-        cat3: "Thé & Boissons",
-        cat4: "Fruits Secs & Douceurs"
-      }
-    };
-
-    let currentLang = localStorage.getItem("sweety_lang") || "ar";
-    let currentTheme = localStorage.getItem("sweety_theme") || "dark";
-
-    function toggleLangMenu(e) {
-      e.stopPropagation();
-      document.getElementById("lang-dropdown").classList.toggle("open");
-    }
-
-    window.addEventListener('click', () => {
-      const drop = document.getElementById("lang-dropdown");
-      if (drop) drop.classList.remove("open");
-    });
-
-    function translateCategory(rawCat) {
-      const t = i18n[currentLang];
-      if (rawCat === "تحليات وكيك" || rawCat === "Desserts & Cakes" || rawCat === "Desserts & Gâteaux") return t.cat1;
-      if (rawCat === "عصائر طبيعية" || rawCat === "Fresh Juices" || rawCat === "Jus Naturels") return t.cat2;
-      if (rawCat === "شاي ومشروبات" || rawCat === "Tea & Beverages" || rawCat === "Thé & Boissons") return t.cat3;
-      if (rawCat === "مكسرات وسكريات" || rawCat === "Nuts & Sweets" || rawCat === "Fruits Secs & Douceurs") return t.cat4;
-      return rawCat;
-    }
-
-    function applyLanguage() {
-      const t = i18n[currentLang];
-      const htmlEl = document.documentElement;
-
-      htmlEl.lang = currentLang;
-      htmlEl.dir = currentLang === "ar" ? "rtl" : "ltr";
-
-      const langNames = { ar: "العربية", en: "English", fr: "Français" };
-      document.getElementById("current-lang-label").innerText = langNames[currentLang];
-
-      document.getElementById("badge-admin").innerText = t.adminBadge;
-      document.getElementById("btn-edit-contact").innerText = t.editContact;
-      document.getElementById("btn-add-product").innerText = t.addProduct;
-      document.getElementById("btn-preview").innerText = t.preview;
-      document.getElementById("hero-badge").innerText = t.heroBadge;
-      document.getElementById("hero-title").innerText = t.heroTitle;
-      document.getElementById("footer-copy").innerText = t.footerCopy;
-      document.getElementById("top-address").innerText = t.mapBtn;
-
-      document.getElementById("modal-product-heading").innerText = t.modalProductHead;
-      document.getElementById("modal-settings-heading").innerText = t.modalSettingsHead;
-
-      document.getElementById("lbl-p-name").innerText = t.lblPName;
-      document.getElementById("lbl-p-price").innerText = t.lblPPrice;
-      document.getElementById("lbl-p-category").innerText = t.lblPCat;
-      document.getElementById("lbl-p-img").innerText = t.lblPImg;
-      document.getElementById("p-image-hint").innerText = t.pImgHint;
-      document.getElementById("lbl-p-desc").innerText = t.lblPDesc;
-      document.getElementById("btn-save-p").innerText = t.btnSaveP;
-
-      document.getElementById("lbl-s-phone").innerText = t.lblSPhone;
-      document.getElementById("btn-save-s").innerText = t.btnSaveS;
-
-      document.getElementById("opt-cat-1").innerText = t.cat1;
-      document.getElementById("opt-cat-2").innerText = t.cat2;
-      document.getElementById("opt-cat-3").innerText = t.cat3;
-      document.getElementById("opt-cat-4").innerText = t.cat4;
-
-      renderCategories();
-      renderProducts();
-    }
-
-    function changeLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem("sweety_lang", currentLang);
-      const drop = document.getElementById("lang-dropdown");
-      if (drop) drop.classList.remove("open");
-      applyLanguage();
-    }
-
-    function applyTheme() {
-      const htmlEl = document.documentElement;
-      const icon = document.getElementById("theme-icon");
-      
-      icon.classList.remove("theme-spin");
-      void icon.offsetWidth;
-      icon.classList.add("theme-spin");
-
-      if (currentTheme === "dark") {
-        htmlEl.classList.add("dark");
-        htmlEl.classList.remove("light");
-        icon.className = "fa-solid fa-sun text-amber-400 theme-spin";
-      } else {
-        htmlEl.classList.remove("dark");
-        htmlEl.classList.add("light");
-        icon.className = "fa-solid fa-moon text-slate-700 theme-spin";
-      }
-    }
-
-    function toggleDarkMode() {
-      currentTheme = currentTheme === "light" ? "dark" : "light";
-      localStorage.setItem("sweety_theme", currentTheme);
-      applyTheme();
-    }
-
-    const defaultSettings = { 
-      phone: "0778624582", 
-      address: "حي الزمالة، بسكرة",
-      mapUrl: "https://maps.google.com", 
-      instagram: "https://www.instagram.com/mazaj.biskra/", 
-      facebook: "#", 
-      tiktok: "#" 
-    };
-
-    const defaultProducts = [
-      { id: 1, name: "عصير فواكه استوائية طازج", price: "400 دج", category: "عصائر طبيعية", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=80", desc: "مزيج طازج طبيعي 100% من المانجو والأناناس والفرولة." },
-      { id: 2, name: "كعكة الشوكولاتة والمكسرات", price: "2,500 دج", category: "تحليات وكيك", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", desc: "طبقات شوكولاتة فاخرة مغطاة بالمكسرات المحمصة." }
-    ];
-
-    let siteSettings = JSON.parse(localStorage.getItem("sweety_settings")) || defaultSettings;
-    let products = JSON.parse(localStorage.getItem("sweety_products")) || defaultProducts;
-    let selectedCategory = "الكل";
-
-    function applySettings() {
-      document.getElementById("top-phone").innerText = siteSettings.phone;
-      document.getElementById("top-map-link").href = siteSettings.mapUrl || "https://maps.google.com";
-      document.getElementById("link-instagram").href = siteSettings.instagram;
-      document.getElementById("link-facebook").href = siteSettings.facebook;
-      document.getElementById("link-tiktok").href = siteSettings.tiktok;
-    }
-
-    function renderCategories() {
-      const t = i18n[currentLang];
-      const categoryList = [
-        { key: "الكل", label: t.allCat },
-        { key: "تحليات وكيك", label: t.cat1 },
-        { key: "عصائر طبيعية", label: t.cat2 },
-        { key: "شاي ومشروبات", label: t.cat3 },
-        { key: "مكسرات وسكريات", label: t.cat4 }
-      ];
-
-      document.getElementById("categories-container").innerHTML = categoryList.map(cat => `
-        <button onclick="setCategory('${cat.key}')" class="px-6 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all shadow-sm ${selectedCategory === cat.key ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${cat.label}</button>
-      `).join('');
-    }
-
-    function renderProducts() {
-      const t = i18n[currentLang];
-      const grid = document.getElementById("products-grid");
-      const filtered = selectedCategory === "الكل" ? products : products.filter(p => p.category === selectedCategory);
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 font-semibold">${t.noProducts}</div>`;
-        return;
-      }
-
-      grid.innerHTML = filtered.map(p => {
-        const translatedCat = translateCategory(p.category);
-
-        return `
-          <div class="glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl flex flex-col justify-between relative group hover:-translate-y-1.5 transition-all">
-            <div class="relative overflow-hidden h-56">
-              <img src="${p.image}" class="w-full h-full object-cover">
-              <span class="absolute top-3.5 ltr:right-3.5 rtl:left-3.5 bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-semibold px-3.5 py-1 rounded-full shadow-md">${translatedCat}</span>
-              <div class="absolute top-3.5 ltr:left-3.5 rtl:right-3.5 flex gap-2">
-                <button onclick="editProduct(${p.id})" class="bg-amber-500 hover:bg-amber-600 text-white p-2.5 rounded-2xl text-xs font-semibold shadow-md hover:scale-110"><i class="fa-solid fa-pen"></i></button>
-                <button onclick="deleteProduct(${p.id})" class="bg-rose-600 hover:bg-rose-700 text-white p-2.5 rounded-2xl text-xs font-semibold shadow-md hover:scale-110"><i class="fa-solid fa-trash"></i></button>
-              </div>
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <h3 class="font-bold text-slate-900 dark:text-white text-lg mb-1.5 leading-snug luxury-title">${p.name}</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-xs line-clamp-2 mb-5 leading-relaxed font-normal">${p.desc}</p>
-              </div>
-              <div class="pt-4 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
-                <span class="text-amber-600 dark:text-amber-400 font-bold text-lg">${p.price}</span>
-                <span class="text-[11px] bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold px-3 py-1.5 rounded-xl">${t.adminPreview}</span>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function setCategory(cat) { selectedCategory = cat; renderCategories(); renderProducts(); }
-    function openProductModal() { document.getElementById("p-id").value = ""; document.getElementById("product-form").reset(); document.getElementById("product-modal").classList.remove("hidden"); }
-    function closeProductModal() { document.getElementById("product-modal").classList.add("hidden"); }
-
-    function editProduct(id) {
-      const p = products.find(prod => prod.id === id);
-      if (!p) return;
-      document.getElementById("p-id").value = p.id;
-      document.getElementById("p-name").value = p.name;
-      document.getElementById("p-price").value = p.price;
-      document.getElementById("p-category").value = p.category;
-      document.getElementById("p-desc").value = p.desc;
-      document.getElementById("product-modal").classList.remove("hidden");
-    }
-
-    function deleteProduct(id) {
-      const t = i18n[currentLang];
-      if (confirm(t.confirmDelete)) {
-        products = products.filter(p => p.id !== id);
-        localStorage.setItem("sweety_products", JSON.stringify(products));
-        renderProducts();
-      }
-    }
-
-    function handleSaveProduct(e) {
-      e.preventDefault();
-      const id = document.getElementById("p-id").value;
-      const fileInput = document.getElementById("p-image-file");
-      const file = fileInput.files[0];
-
-      const save = (imgUrl) => {
-        if (id) {
-          const idx = products.findIndex(p => p.id == id);
-          if (idx !== -1) {
-            products[idx].name = document.getElementById("p-name").value;
-            products[idx].price = document.getElementById("p-price").value;
-            products[idx].category = document.getElementById("p-category").value;
-            products[idx].desc = document.getElementById("p-desc").value;
-            if (imgUrl) products[idx].image = imgUrl;
-          }
-        } else {
-          products.unshift({
-            id: Date.now(),
-            name: document.getElementById("p-name").value,
-            price: document.getElementById("p-price").value,
-            category: document.getElementById("p-category").value,
-            desc: document.getElementById("p-desc").value,
-            image: imgUrl || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80"
-          });
-        }
-        localStorage.setItem("sweety_products", JSON.stringify(products));
-        closeProductModal();
-        renderProducts();
-      };
-
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement("canvas");
-            const maxDim = 600;
-            let w = img.width, h = img.height;
-            if (w > h && w > maxDim) { h *= maxDim / w; w = maxDim; }
-            else if (h > maxDim) { w *= maxDim / h; h = maxDim; }
-            canvas.width = w; canvas.height = h;
-            canvas.getContext("2d").drawImage(img, 0, 0, w, h);
-            save(canvas.toDataURL("image/jpeg", 0.75));
-          };
-          img.src = evt.target.result;
-        };
-        reader.readAsDataURL(file);
-      } else { save(null); }
-    }
-
-    function openSettingsModal() {
-      document.getElementById("s-phone").value = siteSettings.phone;
-      document.getElementById("s-map").value = siteSettings.mapUrl || "";
-      document.getElementById("s-ig").value = siteSettings.instagram;
-      document.getElementById("s-fb").value = siteSettings.facebook;
-      document.getElementById("s-tk").value = siteSettings.tiktok;
-      document.getElementById("settings-modal").classList.remove("hidden");
-    }
-    function closeSettingsModal() { document.getElementById("settings-modal").classList.add("hidden"); }
-
-    function handleSaveSettings(e) {
-      e.preventDefault();
-      siteSettings = {
-        phone: document.getElementById("s-phone").value,
-        mapUrl: document.getElementById("s-map").value,
-        instagram: document.getElementById("s-ig").value,
-        facebook: document.getElementById("s-fb").value,
-        tiktok: document.getElementById("s-tk").value
-      };
-      localStorage.setItem("sweety_settings", JSON.stringify(siteSettings));
-      closeSettingsModal();
-      applySettings();
-      alert("✅ تم حفظ إعدادات متجر مزاج بنجاح!");
-    }
-
-    applyLanguage(); applyTheme(); applySettings();
-  </script>
 </body>
 </html>
