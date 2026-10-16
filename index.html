@@ -3,106 +3,206 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>مزاج | لُهجة حلوة، مزاج أفضل</title>
+  <title>مزاج | MAZAJ - لحظة حلوة، مزاج أفضل</title>
+  
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = { darkMode: 'class' }
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              900: '#78350f',
+              950: '#451a03',
+            }
+          }
+        }
+      }
+    }
   </script>
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: 'Readex Pro', 'Outfit', sans-serif; }
-    h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
-    button, a, .glass-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    body {
+      font-family: 'Readex Pro', 'Outfit', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6, .luxury-title {
+      font-family: 'Outfit', 'Readex Pro', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    /* Custom smooth transitions */
+    button, a, input, select, textarea, .glass-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f59e0b;
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
+<body class="bg-[#07090e] text-slate-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
 
-  <!-- الهيدر العلوي المتجاوب والمرتب يميناً ويساراً بشكل صحيح -->
-  <header class="w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-4 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+  <!-- ==================== Header / Topbar ==================== -->
+  <header class="w-full bg-[#0b0f19]/90 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
       
-      <!-- أزرار التحكم (اللغة، الثيم) في أقصى اليمين أو اليسار بتنسيق نظيف -->
-      <div class="flex items-center gap-2">
-        <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-full text-xs font-medium border border-slate-700 flex items-center gap-1.5">
-          <i class="fa-solid fa-globe text-amber-500"></i> العربية
+      <!-- Left side: Social/Lang/Theme Controls (تم ترتيبها بشكل نظيف ومنع التداخل) -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-amber-400 hover:bg-slate-800 shadow-sm" title="تبديل المظهر">
+          <i class="fa-solid fa-moon text-xs sm:text-sm"></i>
         </button>
-        <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 p-2 rounded-full border border-slate-700">
-          <i class="fa-solid fa-moon text-amber-500 text-xs"></i>
+        <!-- Language Switcher -->
+        <button id="langToggle" class="bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-globe text-amber-500"></i>
+          <span>العربية</span>
         </button>
       </div>
 
-      <!-- معلومات التواصل والعنوان في الجهة المقابلة -->
-      <div class="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-slate-300">
-        <span class="flex items-center gap-1 bg-slate-800/60 px-2.5 py-1 rounded-full border border-slate-700/50">
-          <span class="hidden sm:inline">حي المصالة،</span> بسكرة <i class="fa-solid fa-location-dot text-amber-500"></i>
-        </span>
-        <span class="flex items-center gap-1 bg-slate-800/60 px-2.5 py-1 rounded-full border border-slate-700/50">
-          0778624582 <i class="fa-solid fa-phone text-amber-500"></i>
-        </span>
+      <!-- Right side: Location & Phone info -->
+      <div class="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-300 flex-wrap justify-end">
+        <a href="tel:0778624582" class="flex items-center gap-1.5 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-full hover:border-amber-500/50">
+          <span class="font-semibold text-slate-200 dir-ltr">0778624582</span>
+          <i class="fa-solid fa-phone text-amber-500 text-xs"></i>
+        </a>
+        <div class="hidden md:flex items-center gap-1.5 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-full">
+          <span class="text-slate-200">حي المصالة، بسكرة</span>
+          <i class="fa-solid fa-location-dot text-amber-500 text-xs"></i>
+        </div>
       </div>
 
     </div>
   </header>
 
-  <!-- القسم الرئيسي للكاتالوج -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full space-y-8">
+  <!-- ==================== Main Content ==================== -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 w-full space-y-8">
 
-    <!-- شريط العنوان والترحيب -->
-    <section class="text-center space-y-3 bg-gradient-to-b from-amber-500/10 via-transparent to-transparent p-6 rounded-3xl border border-amber-500/10">
-      <div class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold border border-amber-500/20">
-        <i class="fa-solid fa-mug-hot"></i> لُهجة حلوة، مزاج أفضل
+    <!-- Hero Section / Branding -->
+    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-b from-amber-500/10 via-slate-900/40 to-slate-950 border border-amber-500/15 p-6 sm:p-10 text-center space-y-4 shadow-2xl">
+      <div class="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-400 border border-amber-500/30 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide">
+        <i class="fa-solid fa-mug-hot"></i>
+        <span>لُهجة حلوة، مزاج أفضل</span>
       </div>
-      <h1 class="text-2xl sm:text-4xl font-black text-slate-100 tracking-tight">
-        قائمة تحليات وعصائر <span class="text-amber-500">مزاج الطازجة</span> 🍹☕
-      </h1>
-      <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto">
-        تصفح الكاتالوج الفاخر، واستمتع بتشكيلتنا المميزة المحضرة بعناية فائقة خصيصاً لك.
+
+      <div class="flex items-center justify-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xl shadow-lg shadow-amber-500/20">
+          م
+        </div>
+        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-100 tracking-tight">
+          مزاج <span class="text-amber-500 font-extrabold">MAZAJ</span>
+        </h1>
+      </div>
+
+      <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto font-normal leading-relaxed">
+        قائمة تحليات وعصائر <span class="text-amber-400 font-semibold">مزاج الطازجة</span> 🍹☕. تصفح الكاتالوج الفاخر واستمتع بأروع النكهات المحضرة خصيصاً لتناسب ذوقك الرفيع.
       </p>
     </section>
 
-    <!-- الفئات (Tabs) مرتبة ومنتظمة -->
-    <div class="flex items-center justify-center gap-2 flex-wrap">
-      <button class="bg-amber-500 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs sm:text-sm shadow-lg shadow-amber-500/20">الكل</button>
-      <button class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium px-5 py-2 rounded-xl text-xs sm:text-sm border border-slate-800">تحليات وكيك</button>
-      <button class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium px-5 py-2 rounded-xl text-xs sm:text-sm border border-slate-800">عصائر طبيعية</button>
+    <!-- Categories / Filter Tabs -->
+    <div class="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+      <button class="category-btn active bg-amber-500 text-slate-950 font-bold px-6 py-2.5 rounded-2xl text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition-all">
+        الكل
+      </button>
+      <button class="category-btn bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 font-medium px-6 py-2.5 rounded-2xl text-xs sm:text-sm transition-all">
+        تحليات وكيك
+      </button>
+      <button class="category-btn bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 font-medium px-6 py-2.5 rounded-2xl text-xs sm:text-sm transition-all">
+        عصائر طبيعية
+      </button>
+      <button class="category-btn bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 font-medium px-6 py-2.5 rounded-2xl text-xs sm:text-sm transition-all">
+        المشروبات الساخنة
+      </button>
     </div>
 
-    <!-- شبكة المنتجات (كاتالوج عرض فقط بدون أزرار طلب مزعجة) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- Products Catalog Grid (عرض فقط بدون أزرار طلب) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       
-      <!-- منتج 1 -->
-      <div class="bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden shadow-xl flex flex-col group hover:border-amber-500/40">
-        <div class="relative h-48 sm:h-52 overflow-hidden bg-slate-800">
-          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&auto=format&fit=crop&q=60" alt="عصير" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[10px] font-bold px-3 py-1 rounded-full">عصائر طبيعية</span>
+      <!-- Item 1 -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-3xl overflow-hidden shadow-xl flex flex-col group hover:border-amber-500/40 transition-all">
+        <div class="relative h-52 sm:h-56 overflow-hidden bg-slate-950">
+          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80" alt="عصير استوائي" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+          <span class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+            عصائر طبيعية
+          </span>
         </div>
-        <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between space-y-3">
-          <div class="space-y-1">
-            <h3 class="text-base sm:text-lg font-bold text-slate-100">عصير فواكه استوائية طازج</h3>
-            <p class="text-slate-400 text-xs line-clamp-2">مزيج طازج طبيعي 100% من المانجو والأناناس والفراولة.</p>
+        <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+          <div class="space-y-1.5">
+            <h3 class="text-lg font-bold text-slate-100 group-hover:text-amber-400 transition-colors">عصير فواكه استوائية طازج</h3>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2">مزيج طازج طبيعي 100% من المانجو والأناناس والفراولة المنعشة.</p>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
-            <span class="text-slate-400 text-xs">السعر</span>
-            <span class="text-amber-400 font-extrabold text-base sm:text-lg">400 دج</span>
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-slate-400 text-xs font-medium">السعر المميز</span>
+            <span class="text-amber-400 font-black text-lg">400 دج</span>
           </div>
         </div>
       </div>
 
-      <!-- منتج 2 -->
-      <div class="bg-slate-900/80 rounded-2xl border border-slate-800 overflow-hidden shadow-xl flex flex-col group hover:border-amber-500/40">
-        <div class="relative h-48 sm:h-52 overflow-hidden bg-slate-800">
-          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&auto=format&fit=crop&q=60" alt="كعكة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-          <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[10px] font-bold px-3 py-1 rounded-full">تحليات وكيك</span>
+      <!-- Item 2 -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-3xl overflow-hidden shadow-xl flex flex-col group hover:border-amber-500/40 transition-all">
+        <div class="relative h-52 sm:h-56 overflow-hidden bg-slate-950">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80" alt="كعكة الشوكولاتة" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+          <span class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+            تحليات وكيك
+          </span>
         </div>
-        <div class="p-4 sm:p-5 flex flex-col flex-grow justify-between space-y-3">
-          <div class="space-y-1">
-            <h3 class="text-base sm:text-lg font-bold text-slate-100">كعكة الشوكولاتة والمكسرات</h3>
-            <p class="text-slate-400 text-xs line-clamp-2">طبقات شوكولاتة فاخرة مغطاة بالمكسرات المحمصة.</p>
+        <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+          <div class="space-y-1.5">
+            <h3 class="text-lg font-bold text-slate-100 group-hover:text-amber-400 transition-colors">كعكة الشوكولاتة والمكسرات</h3>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2">طبقات شوكولاتة فاخرة غنية مع صوص خاص ومكسرات محمصة مقرمشة.</p>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between">
-            <span class="text-slate-400 text-xs">السعر</span>
-            <span class="text-amber-400 font-extrabold text-base sm:text-lg">2,500 دج</span>
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-slate-400 text-xs font-medium">السعر المميز</span>
+            <span class="text-amber-400 font-black text-lg">2,500 دج</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-3xl overflow-hidden shadow-xl flex flex-col group hover:border-amber-500/40 transition-all">
+        <div class="relative h-52 sm:h-56 overflow-hidden bg-slate-950">
+          <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&auto=format&fit=crop&q=80" alt="موهيتو" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+          <span class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+            عصائر طبيعية
+          </span>
+        </div>
+        <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
+          <div class="space-y-1.5">
+            <h3 class="text-lg font-bold text-slate-100 group-hover:text-amber-400 transition-colors">موهيتو النعناع والليمون</h3>
+            <p class="text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2">انتعاش صيفي فائق بمستخلص النعناع الطبيعي وشرائح الليمون الطازج.</p>
+          </div>
+          <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-slate-400 text-xs font-medium">السعر المميز</span>
+            <span class="text-amber-400 font-black text-lg">350 دج</span>
           </div>
         </div>
       </div>
@@ -111,26 +211,47 @@
 
   </main>
 
-  <!-- الفوتر (Footer) -->
-  <footer class="bg-slate-900 border-t border-slate-800 mt-12 py-8 px-4 text-center space-y-4">
-    <div class="max-w-4xl mx-auto space-y-3">
-      <h2 class="text-lg font-extrabold text-slate-100">مزاج | MAZAJ</h2>
-      <p class="text-slate-400 text-xs max-w-md mx-auto">شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلي أوقاتك في بسكرة.</p>
+  <!-- ==================== Footer ==================== -->
+  <footer class="bg-slate-900 border-t border-slate-800/80 mt-16 py-10 px-4 text-center space-y-6">
+    <div class="max-w-4xl mx-auto space-y-4">
       
-      <!-- وسائل التواصل -->
-      <div class="flex items-center justify-center gap-4 pt-2">
-        <a href="#" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500"><i class="fa-brands fa-instagram text-sm"></i></a>
-        <a href="#" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500"><i class="fa-brands fa-facebook-f text-sm"></i></a>
-        <a href="#" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500"><i class="fa-brands fa-tiktok text-sm"></i></a>
+      <div class="space-y-2">
+        <h2 class="text-xl font-black text-slate-100">مزاج | MAZAJ</h2>
+        <p class="text-slate-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+          شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلي أوقاتك في بسكرة.
+        </p>
       </div>
 
-      <div class="text-xs text-slate-400 pt-3 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-center gap-2">
-        <span><i class="fa-solid fa-phone text-amber-500"></i> هاتف التوصيل: <strong>0778624582</strong></span>
-        <span class="hidden sm:inline">•</span>
-        <span><i class="fa-solid fa-location-dot text-amber-500"></i> حي الزمالة، بسكرة</span>
+      <!-- Social Media Icons (مرتبة ومنتظمة في المنتصف بدون تداخل) -->
+      <div class="flex items-center justify-center gap-3 pt-2">
+        <a href="#" class="w-10 h-10 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500/50 shadow-sm" aria-label="Instagram">
+          <i class="fa-brands fa-instagram text-base"></i>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500/50 shadow-sm" aria-label="Facebook">
+          <i class="fa-brands fa-facebook-f text-base"></i>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-300 hover:text-amber-400 hover:border-amber-500/50 shadow-sm" aria-label="TikTok">
+          <i class="fa-brands fa-tiktok text-base"></i>
+        </a>
       </div>
 
-      <p class="text-[11px] text-slate-400 pt-2">© 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra)</p>
+      <!-- Contact details -->
+      <div class="text-xs sm:text-sm text-slate-400 pt-4 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <span class="flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-amber-500"></i>
+          هاتف التوصيل: <strong class="text-slate-200">0778624582</strong>
+        </span>
+        <span class="hidden sm:inline text-slate-600">•</span>
+        <span class="flex items-center gap-1.5">
+          <i class="fa-solid fa-location-dot text-amber-500"></i>
+          حي الزمالة، بسكرة
+        </span>
+      </div>
+
+      <p class="text-[11px] text-slate-400 pt-2">
+        © 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra)
+      </p>
+
     </div>
   </footer>
 
