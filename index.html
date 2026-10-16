@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" class="dark">
 <head>
@@ -9,7 +8,6 @@
   <script>tailwind.config = { darkMode: 'class' }</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
     body { font-family: 'Readex Pro', 'Outfit', sans-serif; }
     h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
@@ -24,7 +22,6 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
-
     .light .glass-nav {
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(20px);
@@ -36,18 +33,13 @@
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
-
     .light .glass-card {
       background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(217, 119, 6, 0.2);
     }
 
-    .custom-dropdown {
-      position: relative;
-      user-select: none;
-    }
-
+    .custom-dropdown { position: relative; user-select: none; }
     .custom-dropdown-menu {
       position: absolute;
       top: calc(100% + 8px);
@@ -60,125 +52,89 @@
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 50;
     }
-
     .custom-dropdown.open .custom-dropdown-menu {
       opacity: 1;
       visibility: visible;
       transform: translateY(0) scale(1);
     }
 
-    .theme-spin {
-      animation: spinOnce 0.4s ease-out;
-    }
+    .theme-spin { animation: spinOnce 0.4s ease-out; }
+    @keyframes spinOnce { 0% { transform: rotate(0deg) scale(0.8); } 100% { transform: rotate(360deg) scale(1); } }
 
-    @keyframes spinOnce {
-      0% { transform: rotate(0deg) scale(0.8); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-
-    /* MAZAJ header redesign */
+    /* MAZAJ header: compact single-row layout */
     .mazaj-header-inner {
       direction: ltr;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 12px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-
-    .mazaj-brand {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      align-self: flex-start;
-      line-height: 0;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-
-    .mazaj-logo {
-      display: block;
-      width: 82px;
-      height: 82px;
-      object-fit: contain;
-      filter: drop-shadow(0 4px 14px rgba(245, 158, 11, 0.16));
-    }
-
-    .mazaj-header-controls {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      width: 100%;
+      gap: 10px;
+      min-height: 96px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+    .mazaj-brand {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 0 1 auto;
+      min-width: 0;
+      line-height: 0;
+      text-decoration: none;
+    }
+    .mazaj-logo {
+      display: block;
+      width: 78px;
+      height: 78px;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 14px rgba(245, 158, 11, 0.16));
+    }
+    .mazaj-header-controls {
+      display: flex;
+      flex: 1 1 auto;
+      min-width: 0;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       direction: ltr;
     }
-
     .mazaj-header-controls > button,
-    .mazaj-header-controls #lang-dropdown {
-      flex-shrink: 0;
-    }
-
-    .mazaj-header-controls #lang-dropdown {
-      direction: rtl;
-    }
-
+    .mazaj-header-controls #lang-dropdown { flex-shrink: 0; }
+    .mazaj-header-controls #lang-dropdown { direction: rtl; }
     .mazaj-header-controls #lang-dropdown .custom-dropdown-menu {
       left: auto;
       right: 0;
     }
-
     @media (min-width: 640px) {
-      .mazaj-header-inner {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        min-height: 104px;
-      }
-
-      .mazaj-logo {
-        width: 104px;
-        height: 104px;
-      }
-
-      .mazaj-header-controls {
-        width: auto;
-        justify-content: flex-end;
-        gap: 12px;
-      }
+      .mazaj-header-inner { min-height: 112px; gap: 24px; }
+      .mazaj-logo { width: 100px; height: 100px; }
+      .mazaj-header-controls { flex: 0 0 auto; justify-content: flex-end; gap: 12px; }
+    }
+    @media (max-width: 360px) {
+      .mazaj-header-inner { gap: 6px; }
+      .mazaj-logo { width: 66px; height: 66px; }
+      .mazaj-header-controls { gap: 6px; }
+      .mazaj-header-controls #lang-dropdown > button { padding-left: 9px; padding-right: 9px; }
     }
   </style>
 </head>
-
 <body class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-800 dark:text-slate-100 flex flex-col antialiased selection:bg-amber-500 selection:text-white">
 
-  <!-- Top Contact Bar -->
+  <!-- Top Contact Bar (بدون الجزء العلوي المزعج وبترتيب نظيف ومتجاوب تماماً) -->
   <div class="bg-gradient-to-r from-amber-950 via-amber-900 to-slate-950 text-amber-100 text-xs sm:text-sm py-2.5 px-4 shadow-sm border-b border-amber-800/40">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
       <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
-        <span class="flex items-center gap-1.5">
-          <i class="fa-solid fa-phone text-amber-400"></i>
-          <a href="#" id="top-phone" class="hover:underline font-bold" dir="ltr">0778624582</a>
-        </span>
-
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-phone text-amber-400"></i> <a href="#" id="top-phone" class="hover:underline font-bold" dir="ltr">0778624582</a></span>
         <a id="top-map-link" href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-1.5 bg-amber-800/50 hover:bg-amber-700/80 text-amber-200 px-3.5 py-1 rounded-full text-xs font-semibold border border-amber-600/40 hover:scale-105">
-          <i class="fa-solid fa-map-location-dot text-amber-400"></i>
-          <span id="top-address">حي الزمالة، بسكرة</span> ↗
+          <i class="fa-solid fa-map-location-dot text-amber-400"></i> <span id="top-address">حي الزمالة، بسكرة</span> ↗
         </a>
       </div>
-
       <div class="flex items-center gap-3 text-sm sm:text-base">
-        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 hover:scale-110">
-          <i class="fa-brands fa-instagram"></i>
-        </a>
-        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400 hover:scale-110">
-          <i class="fa-brands fa-facebook"></i>
-        </a>
-        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300 hover:scale-110">
-          <i class="fa-brands fa-tiktok"></i>
-        </a>
+        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
+        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400 hover:scale-110"><i class="fa-brands fa-facebook"></i></a>
+        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300 hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
   </div>
@@ -186,40 +142,30 @@
   <!-- Main Navigation Bar -->
   <header class="sticky top-0 z-40 glass-nav border-b border-amber-200/50 dark:border-slate-800/80 shadow-md mazaj-header">
     <div class="max-w-7xl mx-auto px-4 mazaj-header-inner">
-
-      <!-- New Mazaj Logo -->
+      <!-- Logo on the left -->
       <a href="#" class="mazaj-brand" aria-label="Mazaj home">
-        <img src="assets/mazaj-logo.png" class="mazaj-logo" alt="شعار مزاج" width="104" height="104">
+        <img src="assets/mazaj-logo.png" class="mazaj-logo" alt="شعار مزاج" width="100" height="100">
       </a>
 
       <div class="mazaj-header-controls">
-
-        <!-- Theme Switcher Button -->
+        <!-- Theme Switcher on the left of the language selector -->
         <button type="button" onclick="toggleDarkMode()" aria-label="Toggle theme" class="p-2.5 rounded-2xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm">
           <i id="theme-icon" class="fa-solid fa-moon text-base block"></i>
         </button>
 
-        <!-- Language Dropdown -->
+        <!-- Language Dropdown on the right -->
         <div class="custom-dropdown" id="lang-dropdown">
           <button type="button" onclick="toggleLangMenu(event)" class="bg-amber-100/80 dark:bg-slate-800/90 border border-amber-300/60 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs font-semibold py-2 px-3 sm:py-2.5 sm:px-3.5 rounded-2xl flex items-center gap-1.5 sm:gap-2 shadow-sm hover:border-amber-400">
             <i class="fa-solid fa-globe text-amber-500"></i>
             <span id="current-lang-label" class="font-bold">العربية</span>
             <i class="fa-solid fa-chevron-down text-[10px] text-amber-500"></i>
           </button>
-
           <div class="custom-dropdown-menu glass-card bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-1.5 border border-slate-200 dark:border-slate-800">
-            <button onclick="changeLanguage('ar')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">
-              العربية <span>🇸🇦</span>
-            </button>
-            <button onclick="changeLanguage('en')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">
-              English <span>🇬🇧</span>
-            </button>
-            <button onclick="changeLanguage('fr')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">
-              Français <span>🇫🇷</span>
-            </button>
+            <button onclick="changeLanguage('ar')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">العربية <span>🇸🇦</span></button>
+            <button onclick="changeLanguage('en')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">English <span>🇬🇧</span></button>
+            <button onclick="changeLanguage('fr')" class="w-full text-start px-3.5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">Français <span>🇫🇷</span></button>
           </div>
         </div>
-
       </div>
     </div>
   </header>
@@ -229,11 +175,9 @@
     <span id="hero-badge" class="inline-block px-5 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 text-amber-700 dark:text-amber-300 font-bold text-xs mb-4 border border-amber-500/30 shadow-sm tracking-wide">
       ✨ لحظة حلوة، مزاج أفضل
     </span>
-
     <h2 id="hero-title" class="luxury-title text-2xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-4">
       قائمة تحليات وعصائر مزاج الطازجة ☕🍹
     </h2>
-
     <p id="hero-subtitle" class="text-slate-600 dark:text-slate-400 text-xs sm:text-base max-w-xl mx-auto font-normal leading-relaxed">
       تصفح الكايتالوج الفاخر، واستمتع بتشكيلتنا المتميزة.
     </p>
@@ -248,16 +192,216 @@
   <!-- Footer -->
   <footer class="bg-slate-950 text-slate-300 pt-14 pb-8 mt-auto border-t border-slate-800/80">
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-
       <div>
         <h4 class="luxury-title text-2xl font-bold text-white mb-3 flex items-center gap-2">☕ مزاج | MAZAJ</h4>
-        <p id="footer-desc" class="text-slate-400 text-sm leading-relaxed font-normal">
-          شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلّي أوقاتك في بسكرة.
-        </p>
+        <p id="footer-desc" class="text-slate-400 text-sm leading-relaxed font-normal">شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلّي أوقاتك في بسكرة.</p>
       </div>
 
       <div>
-        <h5 id="footer-head-social" class="text-white font-semibold mb-4 text-sm tracking-wide">
+        <h5 id="footer-head-social" class="text-white font-semibold mb-4 text-sm tracking-wide">تابعنا على وسائل التواصل</h5>
+        <div class="flex flex-col gap-3 text-sm text-slate-400">
+          <a id="footer-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 flex items-center gap-2"><i class="fa-brands fa-instagram text-base"></i> <span id="f-link-ig">انستغرام (mazaj.biskra)</span></a>
+          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2"><i class="fa-brands fa-facebook text-base"></i> <span id="f-link-fb">فيسبوك</span></a>
+          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2"><i class="fa-brands fa-tiktok text-base"></i> <span id="f-link-tk">تيك توك</span></a>
+        </div>
+      </div>
+
+      <div>
+        <h5 id="footer-head-contact" class="text-white font-semibold mb-4 text-sm tracking-wide">تواصل معنا</h5>
+        <ul class="space-y-3 text-sm text-slate-400">
+          <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-amber-400 text-base"></i> <span id="f-phone-lbl">هاتف التوصيل</span>: <span id="footer-phone" class="font-bold text-white" dir="ltr">0778624582</span></li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400 text-base"></i> <a id="footer-map-link" href="https://maps.google.com" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 text-center text-xs text-slate-500 font-medium" id="footer-copy">
+      © 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra)
+    </div>
+  </footer>
+
+  <script>
+    const i18n = {
+      ar: {
+        brandSub: "شاي • تحليات • عصائر طازجة • مكسرات",
+        heroBadge: "✨ لحظة حلوة، مزاج أفضل",
+        heroTitle: "قائمة تحليات وعصائر مزاج الطازجة ☕🍹",
+        heroSubtitle: "تصفح الكايتالوج الفاخر، واستمتع بتشكيلتنا المتميزة.",
+        footerDesc: "شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلّي أوقاتك في بسكرة.",
+        footerSocial: "تابعنا على وسائل التواصل",
+        footerContact: "تواصل معنا",
+        fIg: "انستغرام", fFb: "فيسبوك", fTk: "تيك توك",
+        fPhone: "هاتف التوصيل", fAddr: "حي الزمالة، بسكرة",
+        footerCopy: "© 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra)",
+        priceLbl: "السعر",
+        noProducts: "لا توجد منتجات في هذا القسم حالياً.",
+        mapBtn: "حي الزمالة، بسكرة",
+        allCat: "الكل",
+        cat1: "تحليات وكيك",
+        cat2: "عصائر طبيعية",
+        cat3: "شاي ومشروبات",
+        cat4: "مكسرات وسكريات"
+      },
+      en: {
+        brandSub: "Tea • Desserts • Fresh Juices • Nuts",
+        heroBadge: "✨ Sweet moments, better mood",
+        heroTitle: "Mazaj Fresh Desserts & Drinks Menu ☕🍹",
+        heroSubtitle: "Browse our luxury catalog and enjoy our finest selection.",
+        footerDesc: "Tea, nuts, natural fresh juices, and delicious desserts in Biskra.",
+        footerSocial: "Follow Us on Social Media",
+        footerContact: "Contact Us",
+        fIg: "Instagram", fFb: "Facebook", fTk: "TikTok",
+        fPhone: "Delivery Phone", fAddr: "El Zamala, Biskra",
+        footerCopy: "© 2026 All Rights Reserved to Mazaj Shop (Mazaj Biskra)",
+        priceLbl: "Price",
+        noProducts: "No products in this category currently.",
+        mapBtn: "El Zamala, Biskra",
+        allCat: "All",
+        cat1: "Desserts & Cakes",
+        cat2: "Fresh Juices",
+        cat3: "Tea & Beverages",
+        cat4: "Nuts & Sweets"
+      },
+      fr: {
+        brandSub: "Thé • Desserts • Jus Frais • Fruits Secs",
+        heroBadge: "✨ Moment doux, meilleur mood",
+        heroTitle: "Menu Desserts & Boissons Fraîches Mazaj ☕🍹",
+        heroSubtitle: "Parcourez notre catalogue raffiné et découvrez nos délicieuses créations.",
+        footerDesc: "Thé, fruits secs, jus naturels frais et délicieux desserts à Biskra.",
+        footerSocial: "Suivez-nous sur les réseaux",
+        footerContact: "Contactez-nous",
+        fIg: "Instagram", fFb: "Facebook", fTk: "TikTok",
+        fPhone: "Tél Livraison", fAddr: "El Zamala, Biskra",
+        footerCopy: "© 2026 Tous droits réservés à Mazaj Shop (Mazaj Biskra)",
+        priceLbl: "Prix",
+        noProducts: "Aucun produit dans cette catégorie actuellement.",
+        mapBtn: "El Zamala, Biskra",
+        allCat: "Tous",
+        cat1: "Desserts & Gâteaux",
+        cat2: "Jus Naturels",
+        cat3: "Thé & Boissons",
+        cat4: "Fruits Secs & Douceurs"
+      }
+    };
+
+    let currentLang = localStorage.getItem("sweety_lang") || "ar";
+    let currentTheme = localStorage.getItem("sweety_theme") || "dark";
+
+    function toggleLangMenu(e) {
+      e.stopPropagation();
+      document.getElementById("lang-dropdown").classList.toggle("open");
+    }
+
+    window.addEventListener('click', () => {
+      const drop = document.getElementById("lang-dropdown");
+      if (drop) drop.classList.remove("open");
+    });
+
+    function translateCategory(rawCat) {
+      const t = i18n[currentLang];
+      if (rawCat === "تحليات وكيك" || rawCat === "Desserts & Cakes" || rawCat === "Desserts & Gâteaux") return t.cat1;
+      if (rawCat === "عصائر طبيعية" || rawCat === "Fresh Juices" || rawCat === "Jus Naturels") return t.cat2;
+      if (rawCat === "شاي ومشروبات" || rawCat === "Tea & Beverages" || rawCat === "Thé & Boissons") return t.cat3;
+      if (rawCat === "مكسرات وسكريات" || rawCat === "Nuts & Sweets" || rawCat === "Fruits Secs & Douceurs") return t.cat4;
+      return rawCat;
+    }
+
+    function applyLanguage() {
+      const t = i18n[currentLang];
+      const htmlEl = document.documentElement;
+
+      htmlEl.lang = currentLang;
+      htmlEl.dir = currentLang === "ar" ? "rtl" : "ltr";
+
+      const langNames = { ar: "العربية", en: "English", fr: "Français" };
+      document.getElementById("current-lang-label").innerText = langNames[currentLang];
+
+      document.getElementById("hero-badge").innerText = t.heroBadge;
+      document.getElementById("hero-title").innerText = t.heroTitle;
+      document.getElementById("hero-subtitle").innerText = t.heroSubtitle;
+      document.getElementById("top-address").innerText = t.mapBtn;
+
+      document.getElementById("footer-desc").innerText = t.footerDesc;
+      document.getElementById("footer-head-social").innerText = t.footerSocial;
+      document.getElementById("footer-head-contact").innerText = t.footerContact;
+      document.getElementById("f-link-ig").innerText = t.fIg;
+      document.getElementById("f-link-fb").innerText = t.fFb;
+      document.getElementById("f-link-tk").innerText = t.fTk;
+      document.getElementById("f-phone-lbl").innerText = t.fPhone;
+      document.getElementById("f-addr-lbl").innerText = t.fAddr;
+      document.getElementById("footer-copy").innerText = t.footerCopy;
+
+      renderCategories();
+      renderProducts();
+    }
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("sweety_lang", currentLang);
+      const drop = document.getElementById("lang-dropdown");
+      if (drop) drop.classList.remove("open");
+      applyLanguage();
+    }
+
+    function applyTheme() {
+      const htmlEl = document.documentElement;
+      const icon = document.getElementById("theme-icon");
+      
+      icon.classList.remove("theme-spin");
+      void icon.offsetWidth;
+      icon.classList.add("theme-spin");
+
+      if (currentTheme === "dark") {
+        htmlEl.classList.add("dark");
+        htmlEl.classList.remove("light");
+        icon.className = "fa-solid fa-sun text-amber-400 theme-spin";
+      } else {
+        htmlEl.classList.remove("dark");
+        htmlEl.classList.add("light");
+        icon.className = "fa-solid fa-moon text-slate-700 theme-spin";
+      }
+    }
+
+    function toggleDarkMode() {
+      currentTheme = currentTheme === "light" ? "dark" : "light";
+      localStorage.setItem("sweety_theme", currentTheme);
+      applyTheme();
+    }
+
+    const defaultSettings = { 
+      phone: "0778624582", 
+      address: "حي الزمالة، بسكرة",
+      mapUrl: "https://maps.google.com", 
+      instagram: "https://www.instagram.com/mazaj.biskra/", 
+      facebook: "#", 
+      tiktok: "#" 
+    };
+
+    const defaultProducts = [
+      { id: 1, name: "عصير فواكه استوائية طازج", price: "400 دج", category: "عصائر طبيعية", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=80", desc: "مزيج طازج طبيعي 100% من المانجو والأناناس والفرولة." },
+      { id: 2, name: "كعكة الشوكولاتة والمكسرات", price: "2,500 دج", category: "تحليات وكيك", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", desc: "طبقات شوكولاتة فاخرة مغطاة بالمكسرات المحمصة." }
+    ];
+
+    let siteSettings = JSON.parse(localStorage.getItem("sweety_settings")) || defaultSettings;
+    let products = JSON.parse(localStorage.getItem("sweety_products")) || defaultProducts;
+    let selectedCategory = "الكل";
+
+    function applySettings() {
+      document.getElementById("top-phone").innerText = siteSettings.phone;
+      document.getElementById("top-map-link").href = siteSettings.mapUrl || "https://maps.google.com";
+      document.getElementById("footer-map-link").href = siteSettings.mapUrl || "https://maps.google.com";
+      document.getElementById("link-instagram").href = siteSettings.instagram;
+      document.getElementById("link-facebook").href = siteSettings.facebook;
+      document.getElementById("link-tiktok").href = siteSettings.tiktok;
+      document.getElementById("footer-instagram").href = siteSettings.instagram;
+      document.getElementById("footer-facebook").href = siteSettings.facebook;
+      document.getElementById("footer-tiktok").href = siteSettings.tiktok;
+      document.getElementById("footer-phone").innerText = siteSettings.phone;
+    }
+
+    function renderCategories() {
+      const t = i18n[currentLang];
+   footer-head-social" class="text-white font-semibold mb-4 text-sm tracking-wide">
           تابعنا على وسائل التواصل
         </h5>
         <div class="flex flex-col gap-3 text-sm text-slate-400">
