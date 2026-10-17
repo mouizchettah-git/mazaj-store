@@ -166,8 +166,11 @@
           <div class="space-y-1"><label id="lbl-ig" class="text-[11px] text-slate-500 dark:text-slate-400">رابط انستغرام</label><input type="url" id="cfg-ig" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
           <div class="space-y-1"><label id="lbl-fb" class="text-[11px] text-slate-500 dark:text-slate-400">رابط فيسبوك</label><input type="url" id="cfg-fb" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
           <div class="space-y-1"><label id="lbl-tk" class="text-[11px] text-slate-500 dark:text-slate-400">رابط تيك توك</label><input type="url" id="cfg-tk" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+          <div class="space-y-1"><label id="lbl-pwd" class="text-[11px] text-amber-500 font-semibold">Password</label><input type="password" id="cfg-pwd" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white" placeholder="Password..."></div>
         </div>
-        <button onclick="saveSettings()" id="btn-save-set" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs shadow-md active:scale-95 transition-transform">حفظ الإعدادات</button>
+        <div class="flex justify-start pt-1">
+          <button onclick="saveSettings()" id="btn-save-set" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs shadow-md active:scale-95 transition-transform">حفظ الإعدادات</button>
+        </div>
       </div>
 
       <!-- Categories Manager -->
@@ -242,7 +245,6 @@
   <script>
     const GITHUB_USER = "mouizchettah-git";
     const GITHUB_REPO = "mazaj-store";
-    const EMBEDDED_TOKEN = "ghp_nECAHrcLwTyZ1ATZaXNgtJV3b3cUgYg"; 
 
     const categoryTranslations = {
       "تحليات وكيك": { ar: "تحليات وكيك", en: "Desserts & Cakes", fr: "Desserts & Gâteaux" },
@@ -283,6 +285,7 @@
         lblIg: "رابط انستغرام",
         lblFb: "رابط فيسبوك",
         lblTk: "رابط تيك توك",
+        lblPwd: "Password",
         lblImg: "صورة المنتج من الجهاز:",
         eLblName: "اسم المنتج",
         eLblPrice: "السعر",
@@ -317,6 +320,7 @@
         lblIg: "Instagram URL",
         lblFb: "Facebook URL",
         lblTk: "TikTok URL",
+        lblPwd: "Password",
         lblImg: "Product Image:",
         eLblName: "Product Name",
         eLblPrice: "Price",
@@ -351,6 +355,7 @@
         lblIg: "URL Instagram",
         lblFb: "URL Facebook",
         lblTk: "URL TikTok",
+        lblPwd: "Password",
         lblImg: "Image du produit:",
         eLblName: "Nom du produit",
         eLblPrice: "Prix",
@@ -362,7 +367,7 @@
 
     let currentLang = localStorage.getItem("sweety_lang") || "ar";
     let currentTheme = localStorage.getItem("sweety_theme") || "dark";
-    let siteSettings = JSON.parse(localStorage.getItem("sweety_settings")) || { phone: "0778624582", address: "حي الزمالة، بسكرة", mapUrl: "https://maps.google.com", instagram: "https://www.instagram.com/mazaj.biskra/", facebook: "#", tiktok: "#" };
+    let siteSettings = JSON.parse(localStorage.getItem("sweety_settings")) || { phone: "0778624582", address: "حي الزمالة، بسكرة", mapUrl: "https://maps.google.com", instagram: "https://www.instagram.com/mazaj.biskra/", facebook: "#", tiktok: "#", password: "" };
     let categories = JSON.parse(localStorage.getItem("sweety_categories")) || ["تحليات وكيك", "عصائر طبيعية", "شاي ومشروبات", "مكسرات وسكريات"];
     let products = JSON.parse(localStorage.getItem("sweety_products")) || [{ id: 1, name: "عصير فواكه استوائية طازج", price: "400 دج", category: "عصائر طبيعية", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=80", desc: "مزيج طازج طبيعي 100%." }];
 
@@ -425,6 +430,7 @@
       document.getElementById("lbl-ig").innerText = t.lblIg;
       document.getElementById("lbl-fb").innerText = t.lblFb;
       document.getElementById("lbl-tk").innerText = t.lblTk;
+      document.getElementById("lbl-pwd").innerText = t.lblPwd;
       document.getElementById("lbl-img").innerText = t.lblImg;
 
       document.getElementById("e-lbl-name").innerText = t.eLblName;
@@ -499,6 +505,7 @@
       document.getElementById("cfg-ig").value = siteSettings.instagram || "";
       document.getElementById("cfg-fb").value = siteSettings.facebook || "";
       document.getElementById("cfg-tk").value = siteSettings.tiktok || "";
+      document.getElementById("cfg-pwd").value = siteSettings.password || "";
       applyTheme();
       applyAdminLang();
     }
@@ -510,11 +517,21 @@
       siteSettings.instagram = document.getElementById("cfg-ig").value.trim();
       siteSettings.facebook = document.getElementById("cfg-fb").value.trim();
       siteSettings.tiktok = document.getElementById("cfg-tk").value.trim();
+      siteSettings.password = document.getElementById("cfg-pwd").value.trim();
       localStorage.setItem("sweety_settings", JSON.stringify(siteSettings));
       alert("تم حفظ الإعدادات بنجاح!");
     }
 
     async function uploadImageToGitHub(file) {
+      const tokenToUse = siteSettings.password || "";
+      if (!tokenToUse) {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = function(e) { resolve(e.target.result); };
+          reader.readAsDataURL(file);
+        });
+      }
+
       const fileName = `prod_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
       const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/assests/${fileName}`;
       const reader = new FileReader();
@@ -524,7 +541,7 @@
           try {
             const res = await fetch(url, {
               method: "PUT",
-              headers: { "Authorization": `token ${EMBEDDED_TOKEN}`, "Content-Type": "application/json" },
+              headers: { "Authorization": `token ${tokenToUse}`, "Content-Type": "application/json" },
               body: JSON.stringify({ message: `Upload image: ${fileName}`, content: base64Content })
             });
             if (res.ok) {
