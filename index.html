@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; }
+    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; width: 100vw; margin: 0; padding: 0; }
     h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
     [lang="en"] body, [lang="fr"] body { font-family: 'Outfit', sans-serif; }
     
@@ -17,8 +17,10 @@
       background: rgba(15, 23, 42, 0.95); 
       backdrop-filter: blur(20px); 
       -webkit-backdrop-filter: blur(20px);
-      position: relative; 
+      position: sticky;
+      top: 0;
       z-index: 100; 
+      width: 100%;
     }
     .light .glass-nav { 
       background: rgba(255, 255, 255, 0.95); 
@@ -31,7 +33,6 @@
       backdrop-filter: blur(16px); 
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08); 
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .light .glass-card { 
       background: rgba(255, 255, 255, 0.9); 
@@ -49,7 +50,7 @@
       opacity: 0; 
       visibility: hidden; 
       transform: translateY(-8px) scale(0.95); 
-      transition: all 0.25s ease; 
+      transition: all 0.2s ease; 
       z-index: 99999; 
     }
     .custom-dropdown.open .custom-dropdown-menu { 
@@ -58,17 +59,14 @@
       transform: translateY(0) scale(1); 
     }
     
-    .theme-spin { animation: spinOnce 0.4s ease-out; }
-    @keyframes spinOnce { 0% { transform: rotate(0deg) scale(0.8); } 100% { transform: rotate(360deg) scale(1); } }
-
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-800 dark:text-slate-100 flex flex-col antialiased selection:bg-amber-500 selection:text-white">
+<body class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-800 dark:text-slate-100 flex flex-col antialiased selection:bg-amber-500 selection:text-white w-full">
 
   <!-- Top Contact Bar -->
-  <div class="bg-gradient-to-r from-amber-950 via-amber-900 to-slate-950 text-amber-100 text-[11px] sm:text-sm py-2 px-3 sm:px-4 shadow-sm border-b border-amber-800/40">
+  <div class="bg-gradient-to-r from-amber-950 via-amber-900 to-slate-950 text-amber-100 text-[11px] sm:text-sm py-2 px-3 sm:px-4 shadow-sm border-b border-amber-800/40 w-full">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
       <div class="flex items-center gap-2 sm:gap-3">
         <span class="flex items-center gap-1"><i class="fa-solid fa-phone text-amber-400"></i> <a href="#" id="top-phone" class="hover:underline font-bold" dir="ltr">0778624582</a></span>
@@ -77,15 +75,15 @@
         </a>
       </div>
       <div class="flex items-center gap-2.5 text-xs sm:text-sm">
-        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
-        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-facebook"></i></a>
-        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300 transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400"><i class="fa-brands fa-instagram"></i></a>
+        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-facebook"></i></a>
+        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
   </div>
 
   <!-- Main Navigation Bar -->
-  <header class="sticky top-0 z-40 glass-nav border-b border-amber-200/50 dark:border-slate-800/80 shadow-md">
+  <header class="glass-nav border-b border-amber-200/50 dark:border-slate-800/80 shadow-md w-full">
     <div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5">
         <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-amber-500/60 shadow-md bg-slate-900 flex-shrink-0">
@@ -105,13 +103,13 @@
             <i class="fa-solid fa-chevron-down text-[8px] text-amber-500"></i>
           </button>
           <div class="custom-dropdown-menu glass-card bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-1.5 border border-slate-200 dark:border-slate-800">
-            <button onclick="changeLanguage('ar')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">العربية <span>🇸🇦</span></button>
-            <button onclick="changeLanguage('en')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">English <span>🇬🇧</span></button>
-            <button onclick="changeLanguage('fr')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">Français <span>🇫🇷</span></button>
+            <button onclick="changeLanguage('ar')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">العربية <span>🇸🇦</span></button>
+            <button onclick="changeLanguage('en')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">English <span>🇬🇧</span></button>
+            <button onclick="changeLanguage('fr')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">Français <span>🇫🇷</span></button>
           </div>
         </div>
 
-        <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center active:scale-95 transition-transform">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center">
           <i id="theme-icon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
         </button>
       </div>
@@ -119,7 +117,7 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="max-w-7xl mx-auto px-4 pt-8 sm:pt-12 pb-6 text-center">
+  <section class="max-w-7xl mx-auto px-4 pt-8 sm:pt-12 pb-6 text-center w-full">
     <span id="hero-badge" class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 text-amber-700 dark:text-amber-300 font-bold text-xs mb-3 border border-amber-500/30 shadow-sm">✨ لحظة حلوة، مزاج أفضل</span>
     <h2 id="hero-title" class="luxury-title text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-3">قائمة تحليات وعصائر مزاج الطازجة ☕🍹</h2>
     <p id="hero-subtitle" class="text-slate-600 dark:text-slate-400 text-xs sm:text-base max-w-xl mx-auto font-normal leading-relaxed">تصفح الكايتالوج الفاخر، واستمتع بتشكيلتنا المتميزة.</p>
@@ -127,12 +125,12 @@
 
   <!-- Main Catalog Grid -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
-    <div class="flex items-center gap-2 overflow-x-auto px-1 py-2 scrollbar-none mb-8 justify-start sm:justify-center flex-nowrap" id="categories-container"></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="products-grid"></div>
+    <div class="flex items-center gap-2 overflow-x-auto px-1 py-2 scrollbar-none mb-8 justify-start sm:justify-center flex-nowrap w-full" id="categories-container"></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full" id="products-grid"></div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-slate-950 text-slate-300 pt-12 pb-8 mt-auto border-t border-slate-800/80">
+  <footer class="bg-slate-950 text-slate-300 pt-12 pb-8 mt-auto border-t border-slate-800/80 w-full">
     <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
       <div>
         <h4 class="luxury-title text-xl font-bold text-white mb-2 flex items-center gap-2">☕ مزاج | MAZAJ</h4>
@@ -141,16 +139,16 @@
       <div>
         <h5 id="footer-head-social" class="text-white font-semibold mb-3 text-xs sm:text-sm">تابعنا على وسائل التواصل</h5>
         <div class="flex flex-col gap-2.5 text-xs sm:text-sm text-slate-400">
-          <a id="footer-instagram" href="#" target="_blank" class="hover:text-pink-400 flex items-center gap-2 transition-colors"><i class="fa-brands fa-instagram"></i> <span id="f-link-ig">انستغرام</span></a>
-          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2 transition-colors"><i class="fa-brands fa-facebook"></i> <span id="f-link-fb">فيسبوك</span></a>
-          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2 transition-colors"><i class="fa-brands fa-tiktok"></i> <span id="f-link-tk">تيك توك</span></a>
+          <a id="footer-instagram" href="#" target="_blank" class="hover:text-pink-400 flex items-center gap-2"><i class="fa-brands fa-instagram"></i> <span id="f-link-ig">انستغرام</span></a>
+          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2"><i class="fa-brands fa-facebook"></i> <span id="f-link-fb">فيسبوك</span></a>
+          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2"><i class="fa-brands fa-tiktok"></i> <span id="f-link-tk">تيك توك</span></a>
         </div>
       </div>
       <div>
         <h5 id="footer-head-contact" class="text-white font-semibold mb-3 text-xs sm:text-sm">تواصل معنا</h5>
         <ul class="space-y-2.5 text-xs sm:text-sm text-slate-400">
           <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-amber-400"></i> <span id="f-phone-lbl">هاتف</span>: <span id="footer-phone" class="font-bold text-white" dir="ltr">0778624582</span></li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400"></i> <a id="footer-map-link" href="#" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold transition-colors"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400"></i> <a id="footer-map-link" href="#" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
         </ul>
       </div>
     </div>
@@ -166,13 +164,44 @@
       "مكسرات وسكريات": { ar: "مكسرات وسكريات", en: "Nuts & Sweets", fr: "Fruits Secs & Douceurs" }
     };
     
+    // قاموس ترجمة أسماء وأوصاف المنتجات لضمان تغيرها فوراً حسب اللغة
+    const productTranslations = {
+      "عصير فواكه استوائية طازج": {
+        en: { name: "Fresh Tropical Fruit Juice", desc: "100% natural fresh blend of mango, pineapple, and strawberry." },
+        fr: { name: "Jus de Fruits Tropicaux Frais", desc: "Mélange frais 100% naturel de mangue, ananas et fraise." }
+      },
+      "كعكة الشوكولاتة والمكسرات": {
+        en: { name: "Chocolate & Nuts Cake", desc: "Luxury chocolate layers covered with roasted nuts." },
+        fr: { name: "Gâteau Chocolat et Noix", desc: "Couches de chocolat de luxe recouvertes de noix grillées." }
+      }
+    };
+
+    function translateProductName(name, lang) {
+      if (lang === 'ar') return name;
+      if (productTranslations[name] && productTranslations[name][lang]) {
+        return productTranslations[name][lang].name;
+      }
+      return name;
+    }
+
+    function translateProductDesc(desc, lang) {
+      if (lang === 'ar') return desc;
+      for (let key in productTranslations) {
+        if (productTranslations[key].ar === desc || productTranslations[key].en?.desc === desc || productTranslations[key].fr?.desc === desc) {
+          return productTranslations[key][lang]?.desc || desc;
+        }
+      }
+      if (productTranslations[desc] && productTranslations[desc][lang]) {
+        return productTranslations[desc][lang].desc;
+      }
+      return desc;
+    }
+
     function translateCat(catName, lang) {
       if (!catName) return catName;
-      // إذا كانت مطابقة مباشرة في القاموس
       if (categoryTranslations[catName] && categoryTranslations[catName][lang]) {
         return categoryTranslations[catName][lang];
       }
-      // البحث العكسي في حال كان الاسم مخزناً بلغة أخرى
       for (let key in categoryTranslations) {
         if (categoryTranslations[key].ar === catName || categoryTranslations[key].en === catName || categoryTranslations[key].fr === catName) {
           return categoryTranslations[key][lang] || catName;
@@ -191,7 +220,10 @@
     let currentTheme = localStorage.getItem("sweety_theme") || "dark";
     let siteSettings = JSON.parse(localStorage.getItem("sweety_settings")) || { phone: "0778624582", address: "حي الزمالة، بسكرة", mapUrl: "https://maps.google.com", instagram: "https://www.instagram.com/mazaj.biskra/", facebook: "#", tiktok: "#" };
     let categories = JSON.parse(localStorage.getItem("sweety_categories")) || ["تحليات وكيك", "عصائر طبيعية", "شاي ومشروبات", "مكسرات وسكريات"];
-    let products = JSON.parse(localStorage.getItem("sweety_products")) || [{ id: 1, name: "عصير فواكه استوائية طازج", price: "400 دج", category: "عصائر طبيعية", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=80", desc: "مزيج طازج طبيعي 100%." }];
+    let products = JSON.parse(localStorage.getItem("sweety_products")) || [
+      { id: 1, name: "عصير فواكه استوائية طازج", price: "400 دج", category: "عصائر طبيعية", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=80", desc: "مزيج طازج طبيعي 100% من المانجو والأناناس والفرولة." },
+      { id: 2, name: "كعكة الشوكولاتة والمكسرات", price: "2,500 دج", category: "تحليات وكيك", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", desc: "طبقات شوكولاتة فاخرة مغطاة بالمكسرات المحمصة." }
+    ];
     let selectedCategory = "الكل";
 
     function toggleLangMenu(e) { e.stopPropagation(); document.getElementById("lang-dropdown").classList.toggle("open"); }
@@ -224,22 +256,15 @@
     }
 
     function applyTheme() {
-      const htmlEl = document.documentElement; 
-      const icon = document.getElementById("theme-icon");
-      
-      if (icon) {
-        icon.classList.remove("theme-spin");
-        void icon.offsetWidth; 
-        icon.classList.add("theme-spin");
-        icon.className = currentTheme === "dark" ? "fa-solid fa-sun text-amber-400 theme-spin" : "fa-solid fa-moon text-slate-700 theme-spin";
-      }
-
+      const htmlEl = document.documentElement; const icon = document.getElementById("theme-icon");
       if (currentTheme === "dark") { 
         htmlEl.classList.add("dark"); 
         htmlEl.classList.remove("light"); 
+        if(icon) icon.className = "fa-solid fa-sun text-amber-400";
       } else { 
         htmlEl.classList.remove("dark"); 
         htmlEl.classList.add("light"); 
+        if(icon) icon.className = "fa-solid fa-moon text-slate-700";
       }
     }
 
@@ -265,10 +290,10 @@
 
     function renderCategories() {
       const container = document.getElementById("categories-container");
-      let html = `<button onclick="setCategory('الكل')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${selectedCategory === 'الكل' || selectedCategory === 'All' || selectedCategory === 'Tous' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat('الكل', currentLang)}</button>`;
+      let html = `<button onclick="setCategory('الكل')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap shadow-sm flex-shrink-0 ${selectedCategory === 'الكل' || selectedCategory === 'All' || selectedCategory === 'Tous' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat('الكل', currentLang)}</button>`;
       html += categories.map(cat => {
         const isSelected = (selectedCategory === cat || translateCat(selectedCategory, 'ar') === cat);
-        return `<button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${isSelected ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat(cat, currentLang)}</button>`;
+        return `<button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap shadow-sm flex-shrink-0 ${isSelected ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat(cat, currentLang)}</button>`;
       }).join('');
       container.innerHTML = html;
     }
@@ -284,24 +309,28 @@
         return; 
       }
       
-      grid.innerHTML = filtered.map(p => `
-        <div class="glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between group hover:-translate-y-1.5 transition-all">
-          <div class="relative overflow-hidden h-52 sm:h-56">
-            <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
-            <span class="absolute top-3.5 ltr:right-3.5 rtl:left-3.5 bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-semibold px-3.5 py-1 rounded-full shadow-md">${translateCat(p.category, currentLang)}</span>
-          </div>
-          <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between">
-            <div>
-              <h3 class="font-bold text-slate-900 dark:text-white text-base sm:text-lg mb-1.5 leading-snug luxury-title">${p.name}</h3>
-              <p class="text-slate-500 dark:text-slate-400 text-xs line-clamp-2 mb-4 leading-relaxed">${p.desc}</p>
+      grid.innerHTML = filtered.map(p => {
+        const displayName = translateProductName(p.name, currentLang);
+        const displayDesc = translateProductDesc(p.desc, currentLang);
+        return `
+          <div class="glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between group">
+            <div class="relative overflow-hidden h-52 sm:h-56">
+              <img src="${p.image}" class="w-full h-full object-cover">
+              <span class="absolute top-3.5 ltr:right-3.5 rtl:left-3.5 bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-semibold px-3.5 py-1 rounded-full shadow-md">${translateCat(p.category, currentLang)}</span>
             </div>
-            <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
-              <span class="text-[11px] text-slate-400 font-semibold uppercase">${t.priceLbl}</span>
-              <span class="text-amber-600 dark:text-amber-400 font-bold text-base sm:text-lg">${p.price}</span>
+            <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-slate-900 dark:text-white text-base sm:text-lg mb-1.5 leading-snug luxury-title">${displayName}</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-xs line-clamp-2 mb-4 leading-relaxed">${displayDesc}</p>
+              </div>
+              <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400 font-semibold uppercase">${t.priceLbl}</span>
+                <span class="text-amber-600 dark:text-amber-400 font-bold text-base sm:text-lg">${p.price}</span>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     window.addEventListener('storage', function(e) {
