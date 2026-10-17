@@ -3,147 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>مزاج | MAZAJ - لحظة حلوة، مزاج أفضل</title>
+  <title>لوحة التحكم | Mazaj Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class' }</script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; }
-    h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
-    [lang="en"] body, [lang="fr"] body { font-family: 'Outfit', sans-serif; }
-
-    button, a, input, select, textarea, .glass-card {
-      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none !important;
-      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.4) !important;
-    }
-
-    select {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-      background-repeat: no-repeat;
-      background-position: left 0.75rem center;
-      background-size: 1em;
-    }
-    [dir="ltr"] select {
-      background-position: right 0.75rem center;
-    }
-
-    .glass-nav {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-    .light .glass-nav {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
-
-    .glass-card {
-      background: rgba(30, 41, 59, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .light .glass-card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(217, 119, 6, 0.2);
-    }
-
-    .custom-dropdown { position: relative; user-select: none; }
-    .custom-dropdown-menu {
-      position: absolute;
-      top: calc(100% + 8px);
+    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; position: relative; }
+    h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; }
+    
+    #particles-canvas {
+      position: fixed;
+      top: 0;
       left: 0;
-      right: 0;
-      min-width: 140px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-8px) scale(0.95);
-      transition: all 0.2s ease;
-      z-index: 50;
-    }
-    .custom-dropdown.open .custom-dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0) scale(1);
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .theme-spin { animation: spinOnce 0.4s ease-out; }
+    .glass-card { 
+      background: rgba(15, 23, 42, 0.85); 
+      backdrop-filter: blur(16px); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; 
+      position: relative;
+    }
+    .light .glass-card { 
+      background: rgba(255, 255, 255, 0.92); 
+      backdrop-filter: blur(16px); 
+      border: 1px solid rgba(217, 119, 6, 0.25); 
+    }
+
+    .dashboard-header { position: relative; z-index: 1000 !important; }
+    .dashboard-content-card { position: relative; z-index: 10 !important; }
+
+    input:focus, select:focus, textarea:focus { 
+      outline: none !important; 
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.4) !important; 
+    }
+
+    select { 
+      appearance: none; 
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); 
+      background-repeat: no-repeat; 
+      background-position: left 0.75rem center; 
+      background-size: 1em; 
+    }
+    [dir="ltr"] select { background-position: right 0.75rem center; }
+
+    .custom-dropdown { position: relative; user-select: none; z-index: 9999 !important; }
+    .custom-dropdown-menu { 
+      position: absolute; 
+      top: calc(100% + 8px); 
+      inset-inline-start: 0; 
+      width: 170px;
+      opacity: 0; 
+      visibility: hidden; 
+      transform: translateY(-8px) scale(0.95); 
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+      z-index: 99999 !important; 
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+    .custom-dropdown.open .custom-dropdown-menu { 
+      opacity: 1; 
+      visibility: visible; 
+      transform: translateY(0) scale(1); 
+    }
+
+    .theme-spin { animation: spinOnce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
     @keyframes spinOnce { 0% { transform: rotate(0deg) scale(0.8); } 100% { transform: rotate(360deg) scale(1); } }
 
-    .scrollbar-none::-webkit-scrollbar { display: none; }
-    .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* Custom Sleek Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #f59e0b;
-    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
   </style>
 </head>
-<body class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-800 dark:text-slate-100 flex flex-col antialiased selection:bg-amber-500 selection:text-white">
+<body class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-800 dark:text-slate-100 flex flex-col items-center justify-center p-3 sm:p-6 antialiased selection:bg-amber-500 selection:text-white">
 
-  <!-- Top Contact Bar -->
-  <div class="bg-gradient-to-r from-amber-950 via-amber-900 to-slate-950 text-amber-100 text-[11px] sm:text-sm py-2 px-3 sm:px-4 shadow-sm border-b border-amber-800/40">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
-      <div class="flex items-center gap-2 sm:gap-3">
-        <span class="flex items-center gap-1"><i class="fa-solid fa-phone text-amber-400"></i> <a href="#" id="top-phone" class="hover:underline font-bold" dir="ltr">0778624582</a></span>
-        <a id="top-map-link" href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-1 bg-amber-800/50 hover:bg-amber-700/80 text-amber-200 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border border-amber-600/40">
-          <i class="fa-solid fa-map-location-dot text-amber-400"></i> <span id="top-address">حي الزمالة، بسكرة</span> ↗
-        </a>
+  <!-- Canvas Background for Animated Particles -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- 1. Password Login Screen -->
+  <div id="login-screen" class="glass-card max-w-sm w-full p-6 sm:p-8 rounded-3xl border border-amber-500/40 shadow-2xl space-y-5 text-center">
+    
+    <div class="flex items-center justify-between border-b border-slate-200/50 dark:border-slate-800 pb-3 mb-2">
+      <div class="custom-dropdown" id="login-lang-dropdown">
+        <button onclick="toggleLangMenu(event, 'login-lang-dropdown')" class="bg-amber-100/80 dark:bg-slate-800/90 border border-amber-300/60 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-[11px] font-semibold py-1 px-2.5 rounded-xl flex items-center gap-1 shadow-sm hover:border-amber-400">
+          <i class="fa-solid fa-globe text-amber-500 text-[10px]"></i>
+          <span class="curr-lang-lbl font-bold">العربية</span>
+          <i class="fa-solid fa-chevron-down text-[8px] text-amber-500"></i>
+        </button>
+        <div class="custom-dropdown-menu glass-card bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-1.5 border border-slate-200 dark:border-slate-800">
+          <button onclick="changeLanguage('ar')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">العربية <span>🇸🇦</span></button>
+          <button onclick="changeLanguage('en')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">English <span>🇬🇧</span></button>
+          <button onclick="changeLanguage('fr')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">Français <span>🇫🇷</span></button>
+        </div>
       </div>
-      <div class="flex items-center gap-2.5 text-xs sm:text-sm">
-        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400"><i class="fa-brands fa-instagram"></i></a>
-        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-facebook"></i></a>
-        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300"><i class="fa-brands fa-tiktok"></i></a>
-      </div>
+
+      <button onclick="toggleDarkMode()" class="w-8 h-8 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center">
+        <i class="theme-icon-el fa-solid fa-moon text-xs"></i>
+      </button>
     </div>
+
+    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center mx-auto text-2xl">
+      <i class="fa-solid fa-user-shield"></i>
+    </div>
+    <h3 id="login-heading" class="text-xl font-bold text-slate-900 dark:text-white luxury-title">تسجيل دخول الأدمن</h3>
+    
+    <div class="relative w-full">
+      <input type="password" id="login-pass-input" placeholder="Password..." onkeydown="if(event.key === 'Enter') submitAdminLogin()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 ltr:pr-10 rtl:pl-10 text-sm text-slate-800 dark:text-white text-center">
+      <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 ltr:right-3 rtl:left-3 flex items-center text-slate-400 hover:text-amber-400 text-sm">
+        <i id="eye-icon" class="fa-solid fa-eye"></i>
+      </button>
+    </div>
+
+    <p id="login-err-msg" class="text-xs text-rose-400 hidden font-semibold">كلمة المرور غير صحيحة!</p>
+    <button onclick="submitAdminLogin()" id="btn-login-submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl text-xs shadow-lg shadow-amber-500/20 active:scale-95 transition-transform">دخول لوحة التحكم</button>
   </div>
 
-  <!-- Main Navigation Bar -->
-  <header class="sticky top-0 z-40 glass-nav border-b border-amber-200/50 dark:border-slate-800/80 shadow-md">
-    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
+  <!-- 2. Admin Dashboard Panel (Hidden until login) -->
+  <div id="admin-dashboard" class="hidden max-w-5xl mx-auto px-2 sm:px-4 py-4 sm:py-8 w-full space-y-6">
+    <div class="dashboard-header flex flex-col sm:flex-row items-center justify-between gap-3 glass-card p-4 rounded-2xl border border-amber-500/30 shadow-md">
+      <h3 class="text-base font-black text-amber-500 flex items-center gap-2">
+        <i class="fa-solid fa-screwdriver-wrench"></i> <span id="hdr-admin-title">لوحة التحكم (Mazaj Admin)</span>
+      </h3>
       
-      <!-- Logo & Brand Name -->
-      <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-amber-500/60 shadow-md bg-slate-900 flex-shrink-0">
-          <img src="assests/mazaj-logo.png" alt="Mazaj Logo" class="w-full h-full object-cover">
-        </div>
-        <div class="flex flex-col">
-          <h1 class="text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight luxury-title">
-            مزاج
-          </h1>
-          <span id="brand-sub" class="text-amber-600 dark:text-amber-400 text-[10px] sm:text-[11px] font-medium block">مشروبات • عصائر طبيعية • قهوة</span>
-        </div>
-      </div>
-      
-      <!-- Controls -->
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <button onclick="handleAdminToggleBtn()" id="admin-toggle-btn" class="bg-amber-500/10 hover:bg-amber-500 hover:text-white text-amber-500 border border-amber-500/30 text-xs font-semibold py-1.5 px-3 rounded-xl flex items-center gap-1 shadow-sm">
-          <i class="fa-solid fa-lock text-[10px]"></i> <span id="admin-btn-text">أدمن</span>
-        </button>
-
-        <div class="custom-dropdown" id="lang-dropdown">
-          <button onclick="toggleLangMenu(event)" class="bg-amber-100/80 dark:bg-slate-800/90 border border-amber-300/60 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs font-semibold py-1.5 px-2.5 sm:px-3 rounded-xl flex items-center gap-1 shadow-sm hover:border-amber-400">
+      <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+        <div class="custom-dropdown" id="dash-lang-dropdown">
+          <button onclick="toggleLangMenu(event, 'dash-lang-dropdown')" class="bg-amber-100/80 dark:bg-slate-800/90 border border-amber-300/60 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs font-semibold py-1.5 px-2.5 rounded-xl flex items-center gap-1 shadow-sm hover:border-amber-400">
             <i class="fa-solid fa-globe text-amber-500 text-xs"></i>
-            <span id="current-lang-label" class="font-bold">العربية</span>
+            <span class="curr-lang-lbl font-bold">العربية</span>
             <i class="fa-solid fa-chevron-down text-[8px] text-amber-500"></i>
           </button>
           <div class="custom-dropdown-menu glass-card bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-1.5 border border-slate-200 dark:border-slate-800">
@@ -153,232 +144,107 @@
           </div>
         </div>
 
-        <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center">
-          <i id="theme-icon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
+        <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center">
+          <i class="theme-icon-el fa-solid fa-moon text-xs"></i>
         </button>
-      </div>
 
+        <a href="index.html" target="_blank" id="btn-view-site" class="text-xs bg-amber-500/20 text-amber-600 dark:text-amber-300 px-3 py-2 rounded-xl border border-amber-500/30 hover:bg-amber-500 hover:text-slate-950 font-semibold flex items-center gap-1">
+          <span>عرض الموقع العام</span> ↗
+        </a>
+      </div>
     </div>
-  </header>
 
-  <!-- Integrated Admin Panel -->
-  <div id="admin-panel-container" class="hidden max-w-7xl mx-auto px-4 pt-6 w-full">
-    <div class="glass-card p-6 rounded-3xl shadow-2xl border-2 border-amber-500/40 space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-700/60 pb-4">
-        <h3 id="admin-panel-title" class="text-lg font-black text-amber-400 flex items-center gap-2">
-          <i class="fa-solid fa-screwdriver-wrench"></i> لوحة التحكم المدمجة (Admin Panel)
-        </h3>
-        <button onclick="toggleAdminPanelVisibility()" id="admin-close-btn" class="text-xs bg-rose-500/20 text-rose-400 px-3 py-1.5 rounded-xl border border-rose-500/30 hover:bg-rose-500 hover:text-white">إغلاق لوحة التحكم</button>
-      </div>
-
-      <!-- 1. General Store Settings -->
+    <div class="dashboard-content-card glass-card p-4 sm:p-6 rounded-3xl shadow-2xl border-2 border-amber-500/40 space-y-6">
+      
+      <!-- General Store Settings -->
       <div class="space-y-3">
-        <h4 id="admin-settings-title" class="text-sm font-bold text-slate-100 flex items-center gap-2"><i class="fa-solid fa-gears text-amber-500"></i> إعدادات المتجر العامة</h4>
+        <h4 id="set-title" class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2"><i class="fa-solid fa-gears text-amber-500"></i> إعدادات المتجر العامة</h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          <div class="space-y-1">
-            <label id="lbl-phone" class="text-[11px] text-slate-400">هاتف التوصيل</label>
-            <input type="text" id="cfg-phone" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
-          <div class="space-y-1">
-            <label id="lbl-address" class="text-[11px] text-slate-400">اسم العنوان</label>
-            <input type="text" id="cfg-address" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
-          <div class="space-y-1">
-            <label id="lbl-map" class="text-[11px] text-slate-400">رابط خريطة جوجل (Google Maps URL)</label>
-            <input type="url" id="cfg-map" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
-          <div class="space-y-1">
-            <label id="lbl-ig" class="text-[11px] text-slate-400">رابط انستغرام</label>
-            <input type="url" id="cfg-ig" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
-          <div class="space-y-1">
-            <label id="lbl-fb" class="text-[11px] text-slate-400">رابط فيسبوك</label>
-            <input type="url" id="cfg-fb" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
-          <div class="space-y-1">
-            <label id="lbl-tk" class="text-[11px] text-slate-400">رابط تيك توك</label>
-            <input type="url" id="cfg-tk" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          </div>
+          <div class="space-y-1"><label id="lbl-phone" class="text-[11px] text-slate-500 dark:text-slate-400">هاتف التوصيل</label><input type="text" id="cfg-phone" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+          <div class="space-y-1"><label id="lbl-address" class="text-[11px] text-slate-500 dark:text-slate-400">اسم العنوان</label><input type="text" id="cfg-address" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+          <div class="space-y-1"><label id="lbl-map" class="text-[11px] text-slate-500 dark:text-slate-400">رابط خريطة جوجل</label><input type="url" id="cfg-map" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+          <div class="space-y-1"><label id="lbl-ig" class="text-[11px] text-slate-500 dark:text-slate-400">رابط انستغرام</label><input type="url" id="cfg-ig" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+          <div class="space-y-1"><label id="lbl-fb" class="text-[11px] text-slate-500 dark:text-slate-400">رابط فيسبوك</label><input type="url" id="cfg-fb" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+          <div class="space-y-1"><label id="lbl-tk" class="text-[11px] text-slate-500 dark:text-slate-400">رابط تيك توك</label><input type="url" id="cfg-tk" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
         </div>
-        <button onclick="saveSettings()" id="btn-save-settings" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs">حفظ الإعدادات</button>
+        <button onclick="saveSettings()" id="btn-save-set" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs shadow-md active:scale-95 transition-transform">حفظ الإعدادات</button>
       </div>
 
-      <!-- 2. Manage Categories -->
-      <div class="border-t border-slate-700/60 pt-4 space-y-3">
-        <h4 id="admin-cat-title" class="text-sm font-bold text-slate-100 flex items-center gap-2"><i class="fa-solid fa-tags text-amber-500"></i> إدارة الأقسام</h4>
+      <!-- Categories Manager -->
+      <div class="border-t border-slate-200 dark:border-slate-700/60 pt-4 space-y-3">
+        <h4 id="cat-title" class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2"><i class="fa-solid fa-tags text-amber-500"></i> إدارة الأقسام</h4>
         <div class="flex gap-2">
-          <input type="text" id="new-cat-input" placeholder="اسم القسم الجديد..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          <button onclick="addCategory()" id="btn-add-cat" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs whitespace-nowrap">إضافة قسم</button>
+          <input type="text" id="new-cat-input" placeholder="اسم القسم الجديد..." class="flex-grow bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white">
+          <button onclick="addCategory()" id="btn-add-cat" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs whitespace-nowrap active:scale-95 transition-transform">إضافة قسم</button>
         </div>
         <div id="admin-cat-manager-list" class="flex flex-wrap gap-2 pt-2"></div>
       </div>
 
-      <!-- 3. Add Product -->
-      <div class="border-t border-slate-700/60 pt-4 space-y-3">
-        <h4 id="admin-prod-title" class="text-sm font-bold text-slate-100 flex items-center gap-2"><i class="fa-solid fa-plus text-amber-500"></i> إضافة منتج جديد</h4>
+      <!-- Add Product -->
+      <div class="border-t border-slate-200 dark:border-slate-700/60 pt-4 space-y-3">
+        <h4 id="prod-title" class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2"><i class="fa-solid fa-plus text-amber-500"></i> إضافة منتج جديد</h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          <input type="text" id="p-name" placeholder="اسم المنتج" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          <input type="text" id="p-price" placeholder="السعر (مثال: 400 دج)" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-          <select id="p-category" class="bg-slate-900 border border-slate-700 rounded-xl px-3 pl-8 py-2 text-xs text-white cursor-pointer"></select>
+          <input type="text" id="p-name" placeholder="اسم المنتج" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white">
+          <input type="text" id="p-price" placeholder="السعر (مثال: 400 دج)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white">
+          <select id="p-category" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 pl-8 py-2 text-xs text-slate-800 dark:text-white cursor-pointer"></select>
         </div>
-
         <div class="space-y-1">
-          <label id="lbl-upload-img" class="text-[11px] text-amber-400 font-semibold block">صورة المنتج من الجهاز (PNG / JPG):</label>
-          <label class="flex items-center justify-center gap-2 w-full bg-slate-900 border border-dashed border-amber-500/40 hover:border-amber-500 rounded-xl py-3 px-4 text-xs text-slate-300 cursor-pointer shadow-inner">
-            <i class="fa-solid fa-cloud-arrow-up text-amber-400 text-base"></i>
+          <label id="lbl-img" class="text-[11px] text-amber-500 font-semibold block">صورة المنتج من الجهاز:</label>
+          <label class="flex items-center justify-center gap-2 w-full bg-white dark:bg-slate-900 border border-dashed border-amber-500/40 hover:border-amber-500 rounded-xl py-3 px-4 text-xs text-slate-600 dark:text-slate-300 cursor-pointer transition-colors">
+            <i class="fa-solid fa-cloud-arrow-up text-amber-500 text-base"></i>
             <span id="p-file-label">اختر صورة من جهازك...</span>
             <input type="file" id="p-file-input" accept="image/*" class="hidden" onchange="updateFileLabel(this, 'p-file-label')">
           </label>
         </div>
-
-        <textarea id="p-desc" rows="2" placeholder="وصف المنتج..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-        <button onclick="addProduct()" id="btn-add-prod" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs">إضافة المنتج للموقع</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hero Section -->
-  <section class="max-w-7xl mx-auto px-4 pt-8 sm:pt-12 pb-6 text-center">
-    <span id="hero-badge" class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 text-amber-700 dark:text-amber-300 font-bold text-xs mb-3 border border-amber-500/30 shadow-sm tracking-wide">
-      ✨ لحظة حلوة، مزاج أفضل
-    </span>
-    <h2 id="hero-title" class="luxury-title text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-3">
-      قائمة تحليات وعصائر مزاج الطازجة ☕🍹
-    </h2>
-    <p id="hero-subtitle" class="text-slate-600 dark:text-slate-400 text-xs sm:text-base max-w-xl mx-auto font-normal leading-relaxed">
-      تصفح الكايتالوج الفاخر، واستمتع بتشكيلتنا المتميزة.
-    </p>
-  </section>
-
-  <!-- Main Catalog Grid -->
-  <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
-    <div class="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none mb-8 justify-start sm:justify-center" id="categories-container"></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="products-grid"></div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-slate-950 text-slate-300 pt-12 pb-8 mt-auto border-t border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-      <div>
-        <h4 class="luxury-title text-xl font-bold text-white mb-2 flex items-center gap-2">☕ مزاج | MAZAJ</h4>
-        <p id="footer-desc" class="text-slate-400 text-xs sm:text-sm leading-relaxed font-normal">شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلّي أوقاتك في بسكرة.</p>
-      </div>
-
-      <div>
-        <h5 id="footer-head-social" class="text-white font-semibold mb-3 text-xs sm:text-sm tracking-wide">تابعنا على وسائل التواصل</h5>
-        <div class="flex flex-col gap-2.5 text-xs sm:text-sm text-slate-400">
-          <a id="footer-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 flex items-center gap-2"><i class="fa-brands fa-instagram text-sm"></i> <span id="f-link-ig">انستغرام (mazaj.biskra)</span></a>
-          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2"><i class="fa-brands fa-facebook text-sm"></i> <span id="f-link-fb">فيسبوك</span></a>
-          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2"><i class="fa-brands fa-tiktok text-sm"></i> <span id="f-link-tk">تيك توك</span></a>
-        </div>
-      </div>
-
-      <div>
-        <h5 id="footer-head-contact" class="text-white font-semibold mb-3 text-xs sm:text-sm tracking-wide">تواصل معنا</h5>
-        <ul class="space-y-2.5 text-xs sm:text-sm text-slate-400">
-          <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-amber-400"></i> <span id="f-phone-lbl">هاتف التوصيل</span>: <span id="footer-phone" class="font-bold text-white" dir="ltr">0778624582</span></li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400"></i> <a id="footer-map-link" href="https://maps.google.com" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-4 pt-6 border-t border-slate-900 text-center text-[11px] text-slate-500 font-medium" id="footer-copy">
-      © 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra)
-    </div>
-  </footer>
-
-  <!-- ==================== CUSTOM MODALS ==================== -->
-  
-  <!-- 1. Admin Login Modal -->
-  <div id="modal-admin-login" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="glass-card max-w-sm w-full p-6 rounded-3xl border border-amber-500/40 shadow-2xl space-y-4 text-center">
-      <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center mx-auto text-xl">
-        <i class="fa-solid fa-user-shield"></i>
-      </div>
-      <h3 id="modal-login-title" class="text-lg font-bold text-white luxury-title">دخول لوحة التحكم</h3>
-      
-      <!-- حقل كلمة المرور مع زر إظهار/إخفاء (Eye Toggle) -->
-      <div class="relative w-full">
-        <input type="password" id="login-pass-input" placeholder="Password..." onkeydown="if(event.key === 'Enter') submitAdminLogin()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 ltr:pr-10 rtl:pl-10 text-sm text-white text-center">
-        <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 ltr:right-3 rtl:left-3 flex items-center text-slate-400 hover:text-amber-400 text-sm">
-          <i id="eye-icon" class="fa-solid fa-eye"></i>
+        <textarea id="p-desc" rows="2" placeholder="وصف المنتج..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></textarea>
+        <button id="btn-add-prod" onclick="addProduct()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg shadow-emerald-500/10">
+          <i class="fa-solid fa-cloud-arrow-up"></i> <span id="btn-add-txt">إضافة المنتج للمتجر</span>
         </button>
       </div>
 
-      <p id="login-err-msg" class="text-xs text-rose-400 hidden font-semibold">كلمة المرور غير صحيحة!</p>
-      <div class="flex gap-2">
-        <button onclick="submitAdminLogin()" id="btn-login" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs">دخول</button>
-        <button onclick="closeModal('modal-admin-login')" id="btn-cancel-login" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 rounded-xl text-xs">إلغاء</button>
+      <!-- Products List & Quick Edit/Delete -->
+      <div class="border-t border-slate-200 dark:border-slate-700/60 pt-4 space-y-3">
+        <h4 id="list-title" class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2"><i class="fa-solid fa-box-archive text-amber-500"></i> إدارة وتعديل المنتجات الحالية</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="admin-products-list"></div>
       </div>
     </div>
   </div>
 
-  <!-- 2. Edit Product Modal -->
+  <!-- Edit Product Modal -->
   <div id="modal-edit-product" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
     <div class="glass-card max-w-lg w-full p-6 rounded-3xl border border-amber-500/40 shadow-2xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
-        <h3 id="modal-edit-title" class="text-base font-bold text-amber-400 flex items-center gap-2">
-          <i class="fa-solid fa-pen-to-square"></i> تعديل بيانات المنتج
-        </h3>
+        <h3 id="edit-mod-title" class="text-base font-bold text-amber-500 flex items-center gap-2"><i class="fa-solid fa-pen-to-square"></i> تعديل بيانات المنتج</h3>
         <button onclick="closeModal('modal-edit-product')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <input type="hidden" id="edit-p-id">
-      
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <div class="space-y-1">
-          <label id="edit-lbl-name" class="text-[11px] text-slate-400">اسم المنتج</label>
-          <input type="text" id="edit-p-name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-        </div>
-        <div class="space-y-1">
-          <label id="edit-lbl-price" class="text-[11px] text-slate-400">السعر</label>
-          <input type="text" id="edit-p-price" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-        </div>
-        <div class="space-y-1 sm:col-span-2">
-          <label id="edit-lbl-cat" class="text-[11px] text-slate-400">القسم</label>
-          <select id="edit-p-category" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 pl-8 py-2 text-xs text-white cursor-pointer"></select>
-        </div>
+        <div class="space-y-1"><label id="e-lbl-name" class="text-[11px] text-slate-400">اسم المنتج</label><input type="text" id="edit-p-name" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+        <div class="space-y-1"><label id="e-lbl-price" class="text-[11px] text-slate-400">السعر</label><input type="text" id="edit-p-price" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
+        <div class="space-y-1 sm:col-span-2"><label id="e-lbl-cat" class="text-[11px] text-slate-400">القسم</label><select id="edit-p-category" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 pl-8 py-2 text-xs text-slate-800 dark:text-white cursor-pointer"></select></div>
       </div>
-
-      <div class="space-y-2 border-t border-b border-slate-800 py-3">
-        <label id="edit-lbl-img" class="text-[11px] text-amber-400 font-semibold block">تغيير الصورة من جهازك (PNG/JPG):</label>
-        <label class="flex items-center justify-center gap-2 w-full bg-slate-900 border border-dashed border-amber-500/40 hover:border-amber-500 rounded-xl py-3 px-4 text-xs text-slate-300 cursor-pointer shadow-inner">
-          <i class="fa-solid fa-cloud-arrow-up text-amber-400 text-base"></i>
-          <span id="edit-p-file-label">اختر صورة جديدة من جهازك...</span>
+      <div class="space-y-2 border-t border-b border-slate-200 dark:border-slate-800 py-3">
+        <label id="e-lbl-img" class="text-[11px] text-amber-500 font-semibold block">تغيير الصورة:</label>
+        <label class="flex items-center justify-center gap-2 w-full bg-white dark:bg-slate-900 border border-dashed border-amber-500/40 hover:border-amber-500 rounded-xl py-3 px-4 text-xs text-slate-600 dark:text-slate-300 cursor-pointer">
+          <i class="fa-solid fa-cloud-arrow-up text-amber-500 text-base"></i>
+          <span id="edit-p-file-label">اختر صورة جديدة...</span>
           <input type="file" id="edit-p-file-input" accept="image/*" class="hidden" onchange="updateFileLabel(this, 'edit-p-file-label')">
         </label>
       </div>
-
-      <div class="space-y-1">
-        <label id="edit-lbl-desc" class="text-[11px] text-slate-400">الوصف</label>
-        <textarea id="edit-p-desc" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></textarea>
-      </div>
-
+      <div class="space-y-1"><label id="e-lbl-desc" class="text-[11px] text-slate-400">الوصف</label><textarea id="edit-p-desc" rows="3" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></textarea></div>
       <div class="flex gap-2 pt-2">
-        <button onclick="saveProductEdit()" id="btn-save-edit" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs">حفظ التغييرات</button>
+        <button onclick="saveProductEdit()" id="btn-save-edit" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs shadow-md">حفظ التغييرات</button>
         <button onclick="closeModal('modal-edit-product')" id="btn-cancel-edit" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 rounded-xl text-xs">إلغاء</button>
       </div>
     </div>
   </div>
 
-  <!-- 3. Edit Category Modal -->
-  <div id="modal-edit-category" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="glass-card max-w-sm w-full p-6 rounded-3xl border border-amber-500/40 shadow-2xl space-y-4">
-      <h3 id="modal-cat-title" class="text-base font-bold text-amber-400 flex items-center gap-2">
-        <i class="fa-solid fa-pen"></i> تعديل اسم القسم
-      </h3>
-      <input type="hidden" id="edit-cat-index">
-      <input type="text" id="edit-cat-input" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white">
-      <div class="flex gap-2">
-        <button onclick="saveCategoryEdit()" id="btn-save-cat" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs">حفظ</button>
-        <button onclick="closeModal('modal-edit-category')" id="btn-cancel-cat" class="px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 rounded-xl text-xs">إلغاء</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- JavaScript Code -->
   <script>
+    const GITHUB_USER = "mouizchettah-git";
+    const GITHUB_REPO = "mazaj-store";
+    const EMBEDDED_TOKEN = "ghp_nECAHrcLwTyZ1ATZaXNgtJV3b3cUgYg"; 
+
     const categoryTranslations = {
-      "الكل": { ar: "الكل", en: "All", fr: "Tous" },
       "تحليات وكيك": { ar: "تحليات وكيك", en: "Desserts & Cakes", fr: "Desserts & Gâteaux" },
       "عصائر طبيعية": { ar: "عصائر طبيعية", en: "Fresh Juices", fr: "Jus Naturels" },
       "شاي ومشروبات": { ar: "شاي ومشروبات", en: "Tea & Beverages", fr: "Thé & Boissons" },
@@ -386,360 +252,217 @@
     };
 
     function translateCat(catName, lang) {
-      if (categoryTranslations[catName] && categoryTranslations[catName][lang]) {
-        return categoryTranslations[catName][lang];
-      }
-      return catName;
+      return (categoryTranslations[catName] && categoryTranslations[catName][lang]) ? categoryTranslations[catName][lang] : catName;
     }
 
-    const i18n = {
+    const adminI18n = {
       ar: {
-        brandSub: "مشروبات • عصائر طبيعية • قهوة",
-        heroBadge: "✨ لحظة حلوة، مزاج أفضل",
-        heroTitle: "قائمة تحليات وعصائر مزاج الطازجة ☕🍹",
-        heroSubtitle: "تصفح الكايتالوج الفاخر، واستمتع بتشكيلتنا المتميزة.",
-        footerDesc: "شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلّي أوقاتك في بسكرة.",
-        footerSocial: "تابعنا على وسائل التواصل",
-        footerContact: "تواصل معنا",
-        fIg: "انستغرام", fFb: "فيسبوك", fTk: "تيك توك",
-        fPhone: "هاتف التوصيل", fAddr: "حي الزمالة، بسكرة",
-        footerCopy: "© 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra)",
-        priceLbl: "السعر",
-        noProducts: "لا توجد منتجات في هذا القسم حالياً.",
-        mapBtn: "حي الزمالة، بسكرة",
-        adminBtn: "أدمن",
-        adminExit: "خروج الأدمن",
-        adminPanelTitle: "لوحة التحكم المدمجة (Admin Panel)",
-        closePanel: "إغلاق لوحة التحكم",
-        settingsTitle: "إعدادات المتجر العامة",
+        loginHeading: "تسجيل دخول الأدمن",
+        loginBtn: "دخول لوحة التحكم",
+        loginErr: "كلمة المرور غير صحيحة!",
+        hdrTitle: "لوحة التحكم (Mazaj Admin)",
+        btnViewSite: "عرض الموقع العام",
+        setTitle: "إعدادات المتجر العامة",
+        catTitle: "إدارة الأقسام",
+        prodTitle: "إضافة منتج جديد",
+        listTitle: "إدارة وتعديل المنتجات الحالية",
+        saveSet: "حفظ الإعدادات",
+        addCat: "إضافة قسم",
+        addProdBtn: "إضافة المنتج للمتجر",
+        editModTitle: "تعديل بيانات المنتج",
+        saveChanges: "حفظ التغييرات",
+        cancel: "إلغاء",
+        fileDefault: "اختر صورة من جهازك...",
+        newCatPlaceholder: "اسم القسم الجديد...",
+        pNamePlaceholder: "اسم المنتج",
+        pPricePlaceholder: "السعر (مثال: 400 دج)",
+        pDescPlaceholder: "وصف المنتج...",
         lblPhone: "هاتف التوصيل",
-        lblAddress: "اسم العنوان",
-        lblMap: "رابط خريطة جوجل (Google Maps URL)",
+        lblAddr: "اسم العنوان",
+        lblMap: "رابط خريطة جوجل",
         lblIg: "رابط انستغرام",
         lblFb: "رابط فيسبوك",
         lblTk: "رابط تيك توك",
-        btnSaveSettings: "حفظ الإعدادات",
-        catTitle: "إدارة الأقسام",
-        newCatPlaceholder: "اسم القسم الجديد...",
-        btnAddCat: "إضافة قسم",
-        prodTitle: "إضافة منتج جديد",
-        prodNamePlaceholder: "اسم المنتج",
-        prodPricePlaceholder: "السعر (مثال: 400 دج)",
-        prodDescPlaceholder: "وصف المنتج...",
-        lblUploadImg: "صورة المنتج من الجهاز (PNG / JPG):",
-        fileLabelDefault: "اختر صورة من جهازك...",
-        btnAddProd: "إضافة المنتج للموقع",
-        loginTitle: "دخول لوحة التحكم",
-        loginPlaceholder: "Password...",
-        loginErr: "كلمة المرور غير صحيحة!",
-        btnLogin: "دخول",
-        btnCancel: "إلغاء",
-        editProdTitle: "تعديل بيانات المنتج",
-        editLblName: "اسم المنتج",
-        editLblPrice: "السعر",
-        editLblCat: "القسم",
-        editLblImg: "تغيير الصورة من جهازك (PNG/JPG):",
-        editFileDefault: "اختر صورة جديدة من جهازك...",
-        editLblDesc: "الوصف",
-        btnSaveEdit: "حفظ التغييرات",
-        editCatTitle: "تعديل اسم القسم",
-        btnSave: "حفظ"
+        lblImg: "صورة المنتج من الجهاز:",
+        eLblName: "اسم المنتج",
+        eLblPrice: "السعر",
+        eLblCat: "القسم",
+        eLblImg: "تغيير الصورة:",
+        eLblDesc: "الوصف"
       },
       en: {
-        brandSub: "Beverages • Natural Juices • Coffee",
-        heroBadge: "✨ Sweet moments, better mood",
-        heroTitle: "Mazaj Fresh Desserts & Drinks Menu ☕🍹",
-        heroSubtitle: "Browse our luxury catalog and enjoy our finest selection.",
-        footerDesc: "Tea, nuts, natural fresh juices, and delicious desserts in Biskra.",
-        footerSocial: "Follow Us on Social Media",
-        footerContact: "Contact Us",
-        fIg: "Instagram", fFb: "Facebook", fTk: "TikTok",
-        fPhone: "Delivery Phone", fAddr: "El Zamala, Biskra",
-        footerCopy: "© 2026 All Rights Reserved to Mazaj Shop (Mazaj Biskra)",
-        priceLbl: "Price",
-        noProducts: "No products in this category currently.",
-        mapBtn: "El Zamala, Biskra",
-        adminBtn: "Admin",
-        adminExit: "Exit Admin",
-        adminPanelTitle: "Integrated Admin Panel",
-        closePanel: "Close Panel",
-        settingsTitle: "General Store Settings",
+        loginHeading: "Admin Login",
+        loginBtn: "Access Dashboard",
+        loginErr: "Incorrect password!",
+        hdrTitle: "Dashboard (Mazaj Admin)",
+        btnViewSite: "View Live Site",
+        setTitle: "General Store Settings",
+        catTitle: "Manage Categories",
+        prodTitle: "Add New Product",
+        listTitle: "Manage & Edit Products",
+        saveSet: "Save Settings",
+        addCat: "Add Category",
+        addProdBtn: "Add Product to Store",
+        editModTitle: "Edit Product Details",
+        saveChanges: "Save Changes",
+        cancel: "Cancel",
+        fileDefault: "Choose an image...",
+        newCatPlaceholder: "New category name...",
+        pNamePlaceholder: "Product Name",
+        pPricePlaceholder: "Price (e.g. 400 DZD)",
+        pDescPlaceholder: "Product description...",
         lblPhone: "Delivery Phone",
-        lblAddress: "Address Name",
+        lblAddr: "Address Name",
         lblMap: "Google Maps URL",
         lblIg: "Instagram URL",
         lblFb: "Facebook URL",
         lblTk: "TikTok URL",
-        btnSaveSettings: "Save Settings",
-        catTitle: "Manage Categories",
-        newCatPlaceholder: "New category name...",
-        btnAddCat: "Add Category",
-        prodTitle: "Add New Product",
-        prodNamePlaceholder: "Product Name",
-        prodPricePlaceholder: "Price (e.g. 400 DZD)",
-        prodDescPlaceholder: "Product description...",
-        lblUploadImg: "Product Image from Device (PNG / JPG):",
-        fileLabelDefault: "Choose an image from device...",
-        btnAddProd: "Add Product to Site",
-        loginTitle: "Admin Login",
-        loginPlaceholder: "Password...",
-        loginErr: "Incorrect Password!",
-        btnLogin: "Login",
-        btnCancel: "Cancel",
-        editProdTitle: "Edit Product Details",
-        editLblName: "Product Name",
-        editLblPrice: "Price",
-        editLblCat: "Category",
-        editLblImg: "Change Image from Device (PNG/JPG):",
-        editFileDefault: "Choose new image from device...",
-        editLblDesc: "Description",
-        btnSaveEdit: "Save Changes",
-        editCatTitle: "Edit Category Name",
-        btnSave: "Save"
+        lblImg: "Product Image:",
+        eLblName: "Product Name",
+        eLblPrice: "Price",
+        eLblCat: "Category",
+        eLblImg: "Change Image:",
+        eLblDesc: "Description"
       },
       fr: {
-        brandSub: "Boissons • Jus Naturels • Café",
-        heroBadge: "✨ Moment doux, meilleur mood",
-        heroTitle: "Menu Desserts & Boissons Fraîches Mazaj ☕🍹",
-        heroSubtitle: "Parcourez notre catalogue raffiné et découvrez nos délicieuses créations.",
-        footerDesc: "Thé, fruits secs, jus naturels frais et délicieux desserts à Biskra.",
-        footerSocial: "Suivez-nous sur les réseaux",
-        footerContact: "Contactez-nous",
-        fIg: "Instagram", fFb: "Facebook", fTk: "TikTok",
-        fPhone: "Tél Livraison", fAddr: "El Zamala, Biskra",
-        footerCopy: "© 2026 Tous droits réservés à Mazaj Shop (Mazaj Biskra)",
-        priceLbl: "Prix",
-        noProducts: "Aucun produit dans cette catégorie actuellement.",
-        mapBtn: "El Zamala, Biskra",
-        adminBtn: "Admin",
-        adminExit: "Quitter Admin",
-        adminPanelTitle: "Panneau d'administration Intégré",
-        closePanel: "Fermer le Panneau",
-        settingsTitle: "Paramètres Généraux",
+        loginHeading: "Connexion Admin",
+        loginBtn: "Accéder au Panneau",
+        loginErr: "Mot de passe incorrect!",
+        hdrTitle: "Panneau de Contrôle (Mazaj Admin)",
+        btnViewSite: "Voir le Site",
+        setTitle: "Paramètres Généraux",
+        catTitle: "Gérer les Catégories",
+        prodTitle: "Ajouter un Produit",
+        listTitle: "Gérer et Modifier les Produits",
+        saveSet: "Enregistrer",
+        addCat: "Ajouter",
+        addProdBtn: "Ajouter le produit",
+        editModTitle: "Modifier le produit",
+        saveChanges: "Enregistrer",
+        cancel: "Annuler",
+        fileDefault: "Choisir une image...",
+        newCatPlaceholder: "Nom de catégorie...",
+        pNamePlaceholder: "Nom du produit",
+        pPricePlaceholder: "Prix (ex: 400 DZD)",
+        pDescPlaceholder: "Description du produit...",
         lblPhone: "Tél Livraison",
-        lblAddress: "Nom d'adresse",
+        lblAddr: "Nom d'adresse",
         lblMap: "URL Google Maps",
         lblIg: "URL Instagram",
         lblFb: "URL Facebook",
         lblTk: "URL TikTok",
-        btnSaveSettings: "Enregistrer",
-        catTitle: "Gérer les Catégories",
-        newCatPlaceholder: "Nom de la nouvelle catégorie...",
-        btnAddCat: "Ajouter",
-        prodTitle: "Ajouter un Produit",
-        prodNamePlaceholder: "Nom du produit",
-        prodPricePlaceholder: "Prix (ex: 400 DZD)",
-        prodDescPlaceholder: "Description du produit...",
-        lblUploadImg: "Image du produit (PNG / JPG):",
-        fileLabelDefault: "Choisir une image...",
-        btnAddProd: "Ajouter au site",
-        loginTitle: "Connexion Admin",
-        loginPlaceholder: "Mot de passe...",
-        loginErr: "Mot de passe incorrect !",
-        btnLogin: "Connexion",
-        btnCancel: "Annuler",
-        editProdTitle: "Modifier le Produit",
-        editLblName: "Nom du produit",
-        editLblPrice: "Prix",
-        editLblCat: "Catégorie",
-        editLblImg: "Changer l'image (PNG/JPG):",
-        editFileDefault: "Choisir une nouvelle image...",
-        editLblDesc: "Description",
-        btnSaveEdit: "Enregistrer",
-        editCatTitle: "Modifier la Catégorie",
-        btnSave: "Enregistrer"
+        lblImg: "Image du produit:",
+        eLblName: "Nom du produit",
+        eLblPrice: "Prix",
+        eLblCat: "Catégorie",
+        eLblImg: "Changer l'image:",
+        eLblDesc: "Description"
       }
     };
 
     let currentLang = localStorage.getItem("sweety_lang") || "ar";
     let currentTheme = localStorage.getItem("sweety_theme") || "dark";
-    let isAdminLoggedIn = false;
+    let siteSettings = JSON.parse(localStorage.getItem("sweety_settings")) || { phone: "0778624582", address: "حي الزمالة، بسكرة", mapUrl: "https://maps.google.com", instagram: "https://www.instagram.com/mazaj.biskra/", facebook: "#", tiktok: "#" };
+    let categories = JSON.parse(localStorage.getItem("sweety_categories")) || ["تحليات وكيك", "عصائر طبيعية", "شاي ومشروبات", "مكسرات وسكريات"];
+    let products = JSON.parse(localStorage.getItem("sweety_products")) || [{ id: 1, name: "عصير فواكه استوائية طازج", price: "400 دج", category: "عصائر طبيعية", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=80", desc: "مزيج طازج طبيعي 100%." }];
 
-    const defaultSettings = { 
-      phone: "0778624582", 
-      address: "حي الزمالة، بسكرة",
-      mapUrl: "https://maps.google.com", 
-      instagram: "https://www.instagram.com/mazaj.biskra/", 
-      facebook: "https://facebook.com", 
-      tiktok: "https://tiktok.com" 
-    };
-
-    const defaultCategories = ["تحليات وكيك", "عصائر طبيعية", "شاي ومشروبات", "مكسرات وسكريات"];
-
-    const defaultProducts = [
-      { id: 1, name: "عصير فواكه استوائية طازج", price: "400 دج", category: "عصائر طبيعية", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=80", desc: "مزيج طازج طبيعي 100% من المانجو والأناناس والفرولة." },
-      { id: 2, name: "كعكة الشوكولاتة والمكسرات", price: "2,500 دج", category: "تحليات وكيك", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", desc: "طبقات شوكولاتة فاخرة مغطاة بالمكسرات المحمصة." }
-    ];
-
-    let siteSettings = JSON.parse(localStorage.getItem("sweety_settings")) || defaultSettings;
-    let categories = JSON.parse(localStorage.getItem("sweety_categories")) || defaultCategories;
-    let products = JSON.parse(localStorage.getItem("sweety_products")) || defaultProducts;
-    let selectedCategory = "الكل";
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.add("hidden");
+    function toggleLangMenu(e, dropdownId) { 
+      e.stopPropagation(); 
+      const targetDrop = document.getElementById(dropdownId);
+      document.querySelectorAll('.custom-dropdown').forEach(d => {
+        if (d.id !== dropdownId) d.classList.remove('open');
+      });
+      if (targetDrop) targetDrop.classList.toggle("open"); 
     }
-
-    function openModal(modalId) {
-      document.getElementById(modalId).classList.remove("hidden");
-    }
-
-    // دالة إظهار وإخفاء كلمة المرور
-    function togglePasswordVisibility() {
-      const passInput = document.getElementById("login-pass-input");
-      const eyeIcon = document.getElementById("eye-icon");
-      if (passInput.type === "password") {
-        passInput.type = "text";
-        eyeIcon.className = "fa-solid fa-eye-slash";
-      } else {
-        passInput.type = "password";
-        eyeIcon.className = "fa-solid fa-eye";
-      }
-    }
-
-    function updateFileLabel(input, labelId) {
-      const label = document.getElementById(labelId);
-      if (input.files && input.files[0]) {
-        label.innerText = input.files[0].name;
-        label.classList.add("text-amber-400", "font-bold");
-      }
-    }
-
-    function toggleLangMenu(e) {
-      e.stopPropagation();
-      document.getElementById("lang-dropdown").classList.toggle("open");
-    }
-
-    window.addEventListener('click', () => {
-      const drop = document.getElementById("lang-dropdown");
-      if (drop) drop.classList.remove("open");
+    
+    window.addEventListener('click', () => { 
+      document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove("open")); 
     });
 
-    function handleAdminToggleBtn() {
-      if (!isAdminLoggedIn) {
-        document.getElementById("login-pass-input").value = "";
-        document.getElementById("login-err-msg").classList.add("hidden");
-        openModal("modal-admin-login");
-      } else {
-        isAdminLoggedIn = false;
-        document.getElementById("admin-panel-container").classList.add("hidden");
-        document.getElementById("admin-btn-text").innerText = i18n[currentLang].adminBtn;
-        renderProducts();
-      }
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("sweety_lang", lang);
+      document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove("open"));
+      applyAdminLang();
     }
 
-    function submitAdminLogin() {
-      const pass = document.getElementById("login-pass-input").value;
-      if (pass === "Mazaj@store.123?") {
-        isAdminLoggedIn = true;
-        closeModal("modal-admin-login");
-        document.getElementById("admin-panel-container").classList.remove("hidden");
-        document.getElementById("admin-btn-text").innerText = i18n[currentLang].adminExit;
-        renderProducts();
-      } else {
-        document.getElementById("login-err-msg").classList.remove("hidden");
-      }
-    }
-
-    function toggleAdminPanelVisibility() {
-      document.getElementById("admin-panel-container").classList.toggle("hidden");
-    }
-
-    function applyLanguage() {
-      const t = i18n[currentLang];
+    function applyAdminLang() {
+      const t = adminI18n[currentLang];
       const htmlEl = document.documentElement;
-
-      htmlEl.lang = currentLang;
+      htmlEl.lang = currentLang; 
       htmlEl.dir = currentLang === "ar" ? "rtl" : "ltr";
+      
+      document.querySelectorAll(".curr-lang-lbl").forEach(el => {
+        el.innerText = { ar: "العربية", en: "English", fr: "Français" }[currentLang];
+      });
 
-      const langNames = { ar: "العربية", en: "English", fr: "Français" };
-      document.getElementById("current-lang-label").innerText = langNames[currentLang];
+      document.getElementById("login-heading").innerText = t.loginHeading;
+      document.getElementById("btn-login-submit").innerText = t.loginBtn;
+      document.getElementById("login-err-msg").innerText = t.loginErr;
+      document.getElementById("hdr-admin-title").innerText = t.hdrTitle;
+      document.getElementById("btn-view-site").innerHTML = `<span>${t.btnViewSite}</span> ↗`;
+      
+      document.getElementById("set-title").innerHTML = `<i class="fa-solid fa-gears text-amber-500"></i> ${t.setTitle}`;
+      document.getElementById("cat-title").innerHTML = `<i class="fa-solid fa-tags text-amber-500"></i> ${t.catTitle}`;
+      document.getElementById("prod-title").innerHTML = `<i class="fa-solid fa-plus text-amber-500"></i> ${t.prodTitle}`;
+      document.getElementById("list-title").innerHTML = `<i class="fa-solid fa-box-archive text-amber-500"></i> ${t.listTitle}`;
+      
+      document.getElementById("btn-save-set").innerText = t.saveSet;
+      document.getElementById("btn-add-cat").innerText = t.addCat;
+      document.getElementById("btn-add-txt").innerText = t.addProdBtn;
+      document.getElementById("edit-mod-title").innerHTML = `<i class="fa-solid fa-pen-to-square"></i> ${t.editModTitle}`;
+      document.getElementById("btn-save-edit").innerText = t.saveChanges;
+      document.getElementById("btn-cancel-edit").innerText = t.cancel;
 
-      document.getElementById("brand-sub").innerText = t.brandSub;
-      document.getElementById("hero-badge").innerText = t.heroBadge;
-      document.getElementById("hero-title").innerText = t.heroTitle;
-      document.getElementById("hero-subtitle").innerText = t.heroSubtitle;
+      document.getElementById("new-cat-input").placeholder = t.newCatPlaceholder;
+      document.getElementById("p-name").placeholder = t.pNamePlaceholder;
+      document.getElementById("p-price").placeholder = t.pPricePlaceholder;
+      document.getElementById("p-desc").placeholder = t.pDescPlaceholder;
 
-      document.getElementById("footer-desc").innerText = t.footerDesc;
-      document.getElementById("footer-head-social").innerText = t.footerSocial;
-      document.getElementById("footer-head-contact").innerText = t.footerContact;
-      document.getElementById("f-link-ig").innerText = t.fIg;
-      document.getElementById("f-link-fb").innerText = t.fFb;
-      document.getElementById("f-link-tk").innerText = t.fTk;
-      document.getElementById("f-phone-lbl").innerText = t.fPhone;
-      document.getElementById("f-addr-lbl").innerText = t.fAddr;
-      document.getElementById("footer-copy").innerText = t.footerCopy;
-
-      document.getElementById("admin-btn-text").innerText = isAdminLoggedIn ? t.adminExit : t.adminBtn;
-      document.getElementById("admin-panel-title").innerHTML = `<i class="fa-solid fa-screwdriver-wrench"></i> ${t.adminPanelTitle}`;
-      document.getElementById("admin-close-btn").innerText = t.closePanel;
-      document.getElementById("admin-settings-title").innerHTML = `<i class="fa-solid fa-gears text-amber-500"></i> ${t.settingsTitle}`;
       document.getElementById("lbl-phone").innerText = t.lblPhone;
-      document.getElementById("lbl-address").innerText = t.lblAddress;
+      document.getElementById("lbl-address").innerText = t.lblAddr;
       document.getElementById("lbl-map").innerText = t.lblMap;
       document.getElementById("lbl-ig").innerText = t.lblIg;
       document.getElementById("lbl-fb").innerText = t.lblFb;
       document.getElementById("lbl-tk").innerText = t.lblTk;
-      document.getElementById("btn-save-settings").innerText = t.btnSaveSettings;
-      document.getElementById("admin-cat-title").innerHTML = `<i class="fa-solid fa-tags text-amber-500"></i> ${t.catTitle}`;
-      document.getElementById("new-cat-input").placeholder = t.newCatPlaceholder;
-      document.getElementById("btn-add-cat").innerText = t.btnAddCat;
-      document.getElementById("admin-prod-title").innerHTML = `<i class="fa-solid fa-plus text-amber-500"></i> ${t.prodTitle}`;
-      document.getElementById("p-name").placeholder = t.prodNamePlaceholder;
-      document.getElementById("p-price").placeholder = t.prodPricePlaceholder;
-      document.getElementById("p-desc").placeholder = t.prodDescPlaceholder;
-      document.getElementById("lbl-upload-img").innerText = t.lblUploadImg;
-      document.getElementById("p-file-label").innerText = t.fileLabelDefault;
-      document.getElementById("btn-add-prod").innerText = t.btnAddProd;
+      document.getElementById("lbl-img").innerText = t.lblImg;
 
-      document.getElementById("modal-login-title").innerText = t.loginTitle;
-      document.getElementById("login-pass-input").placeholder = t.loginPlaceholder;
-      document.getElementById("login-err-msg").innerText = t.loginErr;
-      document.getElementById("btn-login").innerText = t.btnLogin;
-      document.getElementById("btn-cancel-login").innerText = t.btnCancel;
+      document.getElementById("e-lbl-name").innerText = t.eLblName;
+      document.getElementById("e-lbl-price").innerText = t.eLblPrice;
+      document.getElementById("e-lbl-cat").innerText = t.eLblCat;
+      document.getElementById("e-lbl-img").innerText = t.eLblImg;
+      document.getElementById("e-lbl-desc").innerText = t.eLblDesc;
 
-      document.getElementById("modal-edit-title").innerHTML = `<i class="fa-solid fa-pen-to-square"></i> ${t.editProdTitle}`;
-      document.getElementById("edit-lbl-name").innerText = t.editLblName;
-      document.getElementById("edit-lbl-price").innerText = t.editLblPrice;
-      document.getElementById("edit-lbl-cat").innerText = t.editLblCat;
-      document.getElementById("edit-lbl-img").innerText = t.editLblImg;
-      document.getElementById("edit-p-file-label").innerText = t.editFileDefault;
-      document.getElementById("edit-lbl-desc").innerText = t.editLblDesc;
-      document.getElementById("btn-save-edit").innerText = t.btnSaveEdit;
-      document.getElementById("btn-cancel-edit").innerText = t.btnCancel;
+      const pFileLabel = document.getElementById("p-file-label");
+      if(pFileLabel) pFileLabel.innerText = t.fileDefault;
+      
+      const editFileLabel = document.getElementById("edit-p-file-label");
+      if(editFileLabel) editFileLabel.innerText = t.fileDefault;
 
-      document.getElementById("modal-cat-title").innerHTML = `<i class="fa-solid fa-pen"></i> ${t.editCatTitle}`;
-      document.getElementById("btn-save-cat").innerText = t.btnSave;
-      document.getElementById("btn-cancel-cat").innerText = t.btnCancel;
-
-      renderCategories();
-      renderProducts();
-    }
-
-    function changeLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem("sweety_lang", currentLang);
-      const drop = document.getElementById("lang-dropdown");
-      if (drop) drop.classList.remove("open");
-      applyLanguage();
+      // Render Categories & Products with translations
+      renderCategorySelect();
+      renderAdminCategories();
+      renderAdminProducts();
     }
 
     function applyTheme() {
-      const htmlEl = document.documentElement;
-      const icon = document.getElementById("theme-icon");
+      const htmlEl = document.documentElement; 
+      const icons = document.querySelectorAll(".theme-icon-el");
       
-      icon.classList.remove("theme-spin");
-      void icon.offsetWidth;
-      icon.classList.add("theme-spin");
+      icons.forEach(icon => {
+        icon.classList.remove("theme-spin");
+        void icon.offsetWidth; 
+        icon.classList.add("theme-spin");
+      });
 
-      if (currentTheme === "dark") {
-        htmlEl.classList.add("dark");
-        htmlEl.classList.remove("light");
-        icon.className = "fa-solid fa-sun text-amber-400 theme-spin";
-      } else {
-        htmlEl.classList.remove("dark");
-        htmlEl.classList.add("light");
-        icon.className = "fa-solid fa-moon text-slate-700 theme-spin";
+      if (currentTheme === "dark") { 
+        htmlEl.classList.add("dark"); 
+        htmlEl.classList.remove("light"); 
+        icons.forEach(icon => icon.className = "theme-icon-el fa-solid fa-sun text-amber-400 theme-spin");
+      } else { 
+        htmlEl.classList.remove("dark"); 
+        htmlEl.classList.add("light"); 
+        icons.forEach(icon => icon.className = "theme-icon-el fa-solid fa-moon text-slate-700 theme-spin");
       }
     }
 
@@ -749,27 +472,36 @@
       applyTheme();
     }
 
-    function applySettings() {
-      document.getElementById("top-phone").innerText = siteSettings.phone || "0778624582";
-      document.getElementById("top-address").innerText = siteSettings.address || "حي الزمالة، بسكرة";
-      document.getElementById("top-map-link").href = siteSettings.mapUrl || "https://maps.google.com";
-      document.getElementById("footer-map-link").href = siteSettings.mapUrl || "https://maps.google.com";
-      document.getElementById("link-instagram").href = siteSettings.instagram || "#";
-      document.getElementById("link-facebook").href = siteSettings.facebook || "#";
-      document.getElementById("link-tiktok").href = siteSettings.tiktok || "#";
-      document.getElementById("footer-instagram").href = siteSettings.instagram || "#";
-      document.getElementById("footer-facebook").href = siteSettings.facebook || "#";
-      document.getElementById("footer-tiktok").href = siteSettings.tiktok || "#";
-      document.getElementById("footer-phone").innerText = siteSettings.phone || "0778624582";
+    function closeModal(modalId) { document.getElementById(modalId).classList.add("hidden"); }
+    function openModal(modalId) { document.getElementById(modalId).classList.remove("hidden"); }
 
-      if(document.getElementById("cfg-phone")) {
-        document.getElementById("cfg-phone").value = siteSettings.phone || "";
-        document.getElementById("cfg-address").value = siteSettings.address || "";
-        document.getElementById("cfg-map").value = siteSettings.mapUrl || "";
-        document.getElementById("cfg-ig").value = siteSettings.instagram || "";
-        document.getElementById("cfg-fb").value = siteSettings.facebook || "";
-        document.getElementById("cfg-tk").value = siteSettings.tiktok || "";
+    function togglePasswordVisibility() {
+      const input = document.getElementById("login-pass-input");
+      const icon = document.getElementById("eye-icon");
+      if (input.type === "password") { input.type = "text"; icon.className = "fa-solid fa-eye-slash"; }
+      else { input.type = "password"; icon.className = "fa-solid fa-eye"; }
+    }
+
+    function submitAdminLogin() {
+      const pass = document.getElementById("login-pass-input").value;
+      if (pass === "Mazaj@store.123?") {
+        document.getElementById("login-screen").classList.add("hidden");
+        document.getElementById("admin-dashboard").classList.remove("hidden");
+        initAdminPanel();
+      } else {
+        document.getElementById("login-err-msg").classList.remove("hidden");
       }
+    }
+
+    function initAdminPanel() {
+      document.getElementById("cfg-phone").value = siteSettings.phone || "";
+      document.getElementById("cfg-address").value = siteSettings.address || "";
+      document.getElementById("cfg-map").value = siteSettings.mapUrl || "";
+      document.getElementById("cfg-ig").value = siteSettings.instagram || "";
+      document.getElementById("cfg-fb").value = siteSettings.facebook || "";
+      document.getElementById("cfg-tk").value = siteSettings.tiktok || "";
+      applyTheme();
+      applyAdminLang();
     }
 
     function saveSettings() {
@@ -780,37 +512,48 @@
       siteSettings.facebook = document.getElementById("cfg-fb").value.trim();
       siteSettings.tiktok = document.getElementById("cfg-tk").value.trim();
       localStorage.setItem("sweety_settings", JSON.stringify(siteSettings));
-      applySettings();
+      alert("تم حفظ الإعدادات بنجاح!");
     }
 
-    function renderCategories() {
-      const categoriesContainer = document.getElementById("categories-container");
-      const pCatSelect = document.getElementById("p-category");
-
-      let catHtml = `<button onclick="setCategory('الكل')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm ${selectedCategory === 'الكل' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat('الكل', currentLang)}</button>`;
-
-      catHtml += categories.map(cat => `
-        <button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm ${selectedCategory === cat ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat(cat, currentLang)}</button>
-      `).join('');
-
-      categoriesContainer.innerHTML = catHtml;
-
-      if (pCatSelect) {
-        pCatSelect.innerHTML = categories.map(cat => `<option value="${cat}">${translateCat(cat, currentLang)}</option>`).join('');
-      }
-
-      renderAdminCatManager();
+    async function uploadImageToGitHub(file) {
+      const fileName = `prod_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
+      const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/assests/${fileName}`;
+      const reader = new FileReader();
+      return new Promise((resolve) => {
+        reader.onload = async function(e) {
+          const base64Content = e.target.result.split(',')[1];
+          try {
+            const res = await fetch(url, {
+              method: "PUT",
+              headers: { "Authorization": `token ${EMBEDDED_TOKEN}`, "Content-Type": "application/json" },
+              body: JSON.stringify({ message: `Upload image: ${fileName}`, content: base64Content })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              resolve(data.content.download_url || `assests/${fileName}`);
+            } else { resolve(e.target.result); }
+          } catch (err) { resolve(e.target.result); }
+        };
+        reader.readAsDataURL(file);
+      });
     }
 
-    function renderAdminCatManager() {
-      const listEl = document.getElementById("admin-cat-manager-list");
-      if (!listEl) return;
+    function updateFileLabel(input, labelId) {
+      const label = document.getElementById(labelId);
+      if (input.files && input.files[0]) { label.innerText = input.files[0].name; label.classList.add("text-amber-500", "font-bold"); }
+    }
 
-      listEl.innerHTML = categories.map((cat, idx) => `
-        <div class="bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-xl text-xs text-white flex items-center gap-2">
+    function renderCategorySelect() {
+      const opts = categories.map(c => `<option value="${c}">${translateCat(c, currentLang)}</option>`).join('');
+      document.getElementById("p-category").innerHTML = opts;
+      document.getElementById("edit-p-category").innerHTML = opts;
+    }
+
+    function renderAdminCategories() {
+      document.getElementById("admin-cat-manager-list").innerHTML = categories.map((cat, idx) => `
+        <div class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 px-3 py-1.5 rounded-xl text-xs text-slate-800 dark:text-white flex items-center gap-2 shadow-sm">
           <span>${translateCat(cat, currentLang)}</span>
-          <button onclick="openEditCategoryModal(${idx})" class="text-amber-400 hover:text-amber-300" title="تعديل"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button onclick="deleteCategory(${idx})" class="text-rose-400 hover:text-rose-300" title="حذف"><i class="fa-solid fa-xmark"></i></button>
+          <button onclick="deleteCategory(${idx})" class="text-rose-500 hover:text-rose-400"><i class="fa-solid fa-xmark"></i></button>
         </div>
       `).join('');
     }
@@ -818,54 +561,17 @@
     function addCategory() {
       const input = document.getElementById("new-cat-input");
       const val = input.value.trim();
-      if (!val) return;
-      if (categories.includes(val)) return;
-
+      if (!val || categories.includes(val)) return;
       categories.push(val);
       localStorage.setItem("sweety_categories", JSON.stringify(categories));
       input.value = "";
-      renderCategories();
-      renderProducts();
+      initAdminPanel();
     }
 
-    function openEditCategoryModal(index) {
-      document.getElementById("edit-cat-index").value = index;
-      document.getElementById("edit-cat-input").value = categories[index];
-      openModal("modal-edit-category");
-    }
-
-    function saveCategoryEdit() {
-      const index = parseInt(document.getElementById("edit-cat-index").value);
-      const newName = document.getElementById("edit-cat-input").value.trim();
-      if (newName !== "") {
-        const oldName = categories[index];
-        categories[index] = newName;
-        products.forEach(p => { if (p.category === oldName) p.category = newName; });
-        localStorage.setItem("sweety_categories", JSON.stringify(categories));
-        localStorage.setItem("sweety_products", JSON.stringify(products));
-        closeModal("modal-edit-category");
-        renderCategories();
-        renderProducts();
-      }
-    }
-
-    function deleteCategory(index) {
-      categories.splice(index, 1);
+    function deleteCategory(idx) {
+      categories.splice(idx, 1);
       localStorage.setItem("sweety_categories", JSON.stringify(categories));
-      renderCategories();
-      renderProducts();
-    }
-
-    function readImageFile(fileInput) {
-      return new Promise((resolve) => {
-        if (fileInput && fileInput.files && fileInput.files[0]) {
-          const reader = new FileReader();
-          reader.onload = function(e) { resolve(e.target.result); };
-          reader.readAsDataURL(fileInput.files[0]);
-        } else {
-          resolve(null);
-        }
-      });
+      initAdminPanel();
     }
 
     async function addProduct() {
@@ -874,36 +580,38 @@
       const category = document.getElementById("p-category").value;
       const fileInput = document.getElementById("p-file-input");
       const desc = document.getElementById("p-desc").value.trim();
+      if (!name || !price) { alert("أدخل الاسم والسعر!"); return; }
 
-      let image = await readImageFile(fileInput) || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80";
-
-      if (!name || !price) return;
+      let image = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80";
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const btn = document.getElementById("btn-add-prod");
+        btn.disabled = true; document.getElementById("btn-add-txt").innerText = "جاري رفع الصورة وإضافة المنتج...";
+        const uploaded = await uploadImageToGitHub(fileInput.files[0]);
+        if (uploaded) image = uploaded;
+        btn.disabled = false; document.getElementById("btn-add-txt").innerText = adminI18n[currentLang].addProdBtn;
+      }
 
       products.unshift({ id: Date.now(), name, price, category, image, desc: desc || "وصف مميز للمنتج" });
       localStorage.setItem("sweety_products", JSON.stringify(products));
-
       document.getElementById("p-name").value = "";
       document.getElementById("p-price").value = "";
       if (fileInput) fileInput.value = "";
-      document.getElementById("p-file-label").innerText = i18n[currentLang].fileLabelDefault;
+      document.getElementById("p-file-label").innerText = adminI18n[currentLang].fileDefault;
       document.getElementById("p-desc").value = "";
-      renderProducts();
+      renderAdminProducts();
+      alert("تمت إضافة المنتج بنجاح!");
     }
 
     function openEditProductModal(id) {
       const p = products.find(prod => prod.id === id);
       if (!p) return;
-
       document.getElementById("edit-p-id").value = p.id;
       document.getElementById("edit-p-name").value = p.name;
       document.getElementById("edit-p-price").value = p.price;
       document.getElementById("edit-p-desc").value = p.desc;
       document.getElementById("edit-p-file-input").value = "";
-      document.getElementById("edit-p-file-label").innerText = i18n[currentLang].editFileDefault;
-
-      const catSelect = document.getElementById("edit-p-category");
-      catSelect.innerHTML = categories.map(c => `<option value="${c}" ${c === p.category ? 'selected' : ''}>${translateCat(c, currentLang)}</option>`).join('');
-
+      document.getElementById("edit-p-file-label").innerText = adminI18n[currentLang].fileDefault;
+      document.getElementById("edit-p-category").value = p.category;
       openModal("modal-edit-product");
     }
 
@@ -913,74 +621,106 @@
       if (!p) return;
 
       const fileInput = document.getElementById("edit-p-file-input");
-      const uploadedImage = await readImageFile(fileInput);
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const btn = document.getElementById("btn-save-edit");
+        btn.disabled = true; btn.innerText = "جاري رفع الصورة الجديدة...";
+        const uploaded = await uploadImageToGitHub(fileInput.files[0]);
+        if (uploaded) p.image = uploaded;
+        btn.disabled = false; btn.innerText = adminI18n[currentLang].saveChanges;
+      }
 
       p.name = document.getElementById("edit-p-name").value.trim() || p.name;
       p.price = document.getElementById("edit-p-price").value.trim() || p.price;
       p.category = document.getElementById("edit-p-category").value;
-      if (uploadedImage) { p.image = uploadedImage; }
       p.desc = document.getElementById("edit-p-desc").value.trim() || p.desc;
 
       localStorage.setItem("sweety_products", JSON.stringify(products));
       closeModal("modal-edit-product");
-      renderProducts();
+      renderAdminProducts();
+      alert("تم تعديل المنتج بنجاح!");
     }
 
     function deleteProduct(id) {
-      products = products.filter(p => p.id !== id);
-      localStorage.setItem("sweety_products", JSON.stringify(products));
-      renderProducts();
+      if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
+        products = products.filter(p => p.id !== id);
+        localStorage.setItem("sweety_products", JSON.stringify(products));
+        renderAdminProducts();
+      }
     }
 
-    function renderProducts() {
-      const t = i18n[currentLang];
-      const grid = document.getElementById("products-grid");
-      const filtered = selectedCategory === "الكل" ? products : products.filter(p => p.category === selectedCategory);
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 font-semibold">${t.noProducts}</div>`;
-        return;
-      }
-
-      grid.innerHTML = filtered.map(p => {
-        return `
-          <div class="glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between group hover:-translate-y-1.5 transition-all relative">
-            ${isAdminLoggedIn ? `
-              <div class="absolute top-3 ltr:left-3 rtl:right-3 flex items-center gap-1.5 z-20">
-                <button onclick="openEditProductModal(${p.id})" class="bg-amber-500 text-slate-950 w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110" title="تعديل المنتج"><i class="fa-solid fa-pen text-xs"></i></button>
-                <button onclick="deleteProduct(${p.id})" class="bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110" title="حذف المنتج"><i class="fa-solid fa-trash-can text-xs"></i></button>
-              </div>
-            ` : ''}
-            <div class="relative overflow-hidden h-52 sm:h-56">
-              <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
-              <span class="absolute top-3.5 ltr:right-3.5 rtl:left-3.5 bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-semibold px-3.5 py-1 rounded-full shadow-md">${translateCat(p.category, currentLang)}</span>
-            </div>
-            <div class="p-5 sm:p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <h3 class="font-bold text-slate-900 dark:text-white text-base sm:text-lg mb-1.5 leading-snug luxury-title">${p.name}</h3>
-                <p class="text-slate-500 dark:text-slate-400 text-xs line-clamp-2 mb-4 leading-relaxed font-normal">${p.desc}</p>
-              </div>
-              <div class="pt-3 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between">
-                <span class="text-[11px] text-slate-400 font-semibold uppercase">${t.priceLbl}</span>
-                <span class="text-amber-600 dark:text-amber-400 font-bold text-base sm:text-lg">${p.price}</span>
-              </div>
+    function renderAdminProducts() {
+      document.getElementById("admin-products-list").innerHTML = products.map(p => `
+        <div class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 p-3 rounded-2xl flex items-center justify-between gap-3 shadow-sm">
+          <div class="flex items-center gap-3">
+            <img src="${p.image}" class="w-12 h-12 rounded-xl object-cover">
+            <div>
+              <h5 class="font-bold text-xs text-slate-800 dark:text-white">${p.name}</h5>
+              <span class="text-amber-500 text-[11px] font-semibold">${p.price} - ${translateCat(p.category, currentLang)}</span>
             </div>
           </div>
-        `;
-      }).join('');
+          <div class="flex items-center gap-1.5">
+            <button onclick="openEditProductModal(${p.id})" class="bg-amber-500/20 text-amber-500 hover:bg-amber-500 hover:text-slate-950 w-8 h-8 rounded-xl flex items-center justify-center text-xs" title="تعديل"><i class="fa-solid fa-pen"></i></button>
+            <button onclick="deleteProduct(${p.id})" class="bg-rose-500/20 text-rose-500 hover:bg-rose-500 hover:text-white w-8 h-8 rounded-xl flex items-center justify-center text-xs" title="حذف"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        </div>
+      `).join('');
     }
 
-    function setCategory(cat) { selectedCategory = cat; renderCategories(); renderProducts(); }
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
 
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'sweety_settings') { siteSettings = JSON.parse(e.newValue) || defaultSettings; applySettings(); }
-      if (e.key === 'sweety_categories') { categories = JSON.parse(e.newValue) || defaultCategories; renderCategories(); }
-      if (e.key === 'sweety_products') { products = JSON.parse(e.newValue) || defaultProducts; renderProducts(); }
-      if (e.key === 'sweety_theme') { currentTheme = e.newValue || 'dark'; applyTheme(); }
-      if (e.key === 'sweety_lang') { currentLang = e.newValue || 'ar'; applyLanguage(); }
-    });
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-    applyLanguage(); applyTheme(); applySettings();
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.speedY = Math.random() * 0.4 - 0.2;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = `rgba(245, 158, 11, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 18000);
+      for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particlesArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+    applyTheme();
+    applyAdminLang();
   </script>
 </body>
 </html>
