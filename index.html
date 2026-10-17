@@ -9,24 +9,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; }
+    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
     h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
     [lang="en"] body, [lang="fr"] body { font-family: 'Outfit', sans-serif; }
     
     button, a, input, select, textarea, .glass-card { 
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
     }
     
     .glass-nav { 
-      background: rgba(15, 23, 42, 0.92); 
+      background: rgba(15, 23, 42, 0.95); 
       backdrop-filter: blur(20px); 
       -webkit-backdrop-filter: blur(20px);
       position: relative; 
       z-index: 100; 
-      transition: background-color 0.4s ease;
     }
     .light .glass-nav { 
-      background: rgba(255, 255, 255, 0.92); 
+      background: rgba(255, 255, 255, 0.95); 
       backdrop-filter: blur(20px); 
       -webkit-backdrop-filter: blur(20px);
     }
@@ -36,7 +35,6 @@
       backdrop-filter: blur(16px); 
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08); 
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.3s ease;
     }
     .light .glass-card { 
       background: rgba(255, 255, 255, 0.9); 
@@ -48,13 +46,13 @@
     .custom-dropdown { position: relative; user-select: none; z-index: 9999; }
     .custom-dropdown-menu { 
       position: absolute; 
-      top: calc(100% + 10px); 
+      top: calc(100% + 8px); 
       inset-inline-start: 0; 
       width: 160px;
       opacity: 0; 
       visibility: hidden; 
-      transform: translateY(-12px) scale(0.92); 
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+      transform: translateY(-8px) scale(0.95); 
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
       z-index: 99999; 
     }
     .custom-dropdown.open .custom-dropdown-menu { 
@@ -63,15 +61,8 @@
       transform: translateY(0) scale(1); 
     }
     
-    /* Smooth rotation and bounce for theme switcher */
-    .theme-spin { 
-      animation: spinBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
-    }
-    @keyframes spinBounce { 
-      0% { transform: rotate(0deg) scale(0.7); } 
-      70% { transform: rotate(380deg) scale(1.15); } 
-      100% { transform: rotate(360deg) scale(1); } 
-    }
+    .theme-spin { animation: spinOnce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes spinOnce { 0% { transform: rotate(0deg) scale(0.8); } 100% { transform: rotate(360deg) scale(1); } }
 
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
@@ -87,15 +78,15 @@
   <div class="bg-gradient-to-r from-amber-950 via-amber-900 to-slate-950 text-amber-100 text-[11px] sm:text-sm py-2 px-3 sm:px-4 shadow-sm border-b border-amber-800/40">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
       <div class="flex items-center gap-2 sm:gap-3">
-        <span class="flex items-center gap-1"><i class="fa-solid fa-phone text-amber-400"></i> <a href="#" id="top-phone" class="hover:underline font-bold transition-opacity hover:opacity-80" dir="ltr">0778624582</a></span>
-        <a id="top-map-link" href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-1 bg-amber-800/50 hover:bg-amber-700/80 text-amber-200 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border border-amber-600/40 transition-transform active:scale-95 shadow-sm">
+        <span class="flex items-center gap-1"><i class="fa-solid fa-phone text-amber-400"></i> <a href="#" id="top-phone" class="hover:underline font-bold" dir="ltr">0778624582</a></span>
+        <a id="top-map-link" href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-1 bg-amber-800/50 hover:bg-amber-700/80 text-amber-200 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border border-amber-600/40">
           <i class="fa-solid fa-map-location-dot text-amber-400"></i> <span id="top-address">حي الزمالة، بسكرة</span> ↗
         </a>
       </div>
       <div class="flex items-center gap-2.5 text-xs sm:text-sm">
-        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 transition-colors hover:scale-110"><i class="fa-brands fa-instagram"></i></a>
-        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400 transition-colors hover:scale-110"><i class="fa-brands fa-facebook"></i></a>
-        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300 transition-colors hover:scale-110"><i class="fa-brands fa-tiktok"></i></a>
+        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400"><i class="fa-brands fa-instagram"></i></a>
+        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-facebook"></i></a>
+        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
   </div>
@@ -104,7 +95,7 @@
   <header class="sticky top-0 z-40 glass-nav border-b border-amber-200/50 dark:border-slate-800/80 shadow-md">
     <div class="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-amber-500/60 shadow-md bg-slate-900 flex-shrink-0 hover:rotate-6 transition-transform">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-amber-500/60 shadow-md bg-slate-900 flex-shrink-0">
           <img src="assests/mazaj-logo.png" alt="Mazaj Logo" class="w-full h-full object-cover">
         </div>
         <div class="flex flex-col">
@@ -114,22 +105,20 @@
       </div>
       
       <div class="flex items-center gap-2 flex-shrink-0">
-        <!-- Language Selector -->
         <div class="custom-dropdown" id="lang-dropdown">
-          <button onclick="toggleLangMenu(event)" class="bg-amber-100/80 dark:bg-slate-800/90 border border-amber-300/60 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs font-semibold py-1.5 px-2.5 sm:px-3 rounded-xl flex items-center gap-1 shadow-sm hover:border-amber-400 active:scale-95">
+          <button onclick="toggleLangMenu(event)" class="bg-amber-100/80 dark:bg-slate-800/90 border border-amber-300/60 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs font-semibold py-1.5 px-2.5 sm:px-3 rounded-xl flex items-center gap-1 shadow-sm hover:border-amber-400">
             <i class="fa-solid fa-globe text-amber-500 text-xs"></i>
             <span id="current-lang-label" class="font-bold">العربية</span>
             <i class="fa-solid fa-chevron-down text-[8px] text-amber-500"></i>
           </button>
           <div class="custom-dropdown-menu glass-card bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-1.5 border border-slate-200 dark:border-slate-800">
-            <button onclick="changeLanguage('ar')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">العربية <span>🇸🇦</span></button>
-            <button onclick="changeLanguage('en')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">English <span>🇬🇧</span></button>
-            <button onclick="changeLanguage('fr')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">Français <span>🇫🇷</span></button>
+            <button onclick="changeLanguage('ar')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">العربية <span>🇸🇦</span></button>
+            <button onclick="changeLanguage('en')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">English <span>🇬🇧</span></button>
+            <button onclick="changeLanguage('fr')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">Français <span>🇫🇷</span></button>
           </div>
         </div>
 
-        <!-- Theme Mode Switcher with Smooth Animation -->
-        <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center active:scale-90 transition-transform">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center">
           <i id="theme-icon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
         </button>
       </div>
@@ -138,14 +127,15 @@
 
   <!-- Hero Section -->
   <section class="max-w-7xl mx-auto px-4 pt-8 sm:pt-12 pb-6 text-center">
-    <span id="hero-badge" class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 text-amber-700 dark:text-amber-300 font-bold text-xs mb-3 border border-amber-500/30 shadow-sm animate-pulse">✨ لحظة حلوة، مزاج أفضل</span>
+    <span id="hero-badge" class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 text-amber-700 dark:text-amber-300 font-bold text-xs mb-3 border border-amber-500/30 shadow-sm">✨ لحظة حلوة، مزاج أفضل</span>
     <h2 id="hero-title" class="luxury-title text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-3">قائمة تحليات وعصائر مزاج الطازجة ☕🍹</h2>
     <p id="hero-subtitle" class="text-slate-600 dark:text-slate-400 text-xs sm:text-base max-w-xl mx-auto font-normal leading-relaxed">تصفح الكايتالوج الفاخر، واستمتع بتشكيلتنا المتميزة.</p>
   </section>
 
   <!-- Main Catalog Grid -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
-    <div class="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none mb-8 justify-start sm:justify-center" id="categories-container"></div>
+    <!-- تم تعديل الكلاسات لضمان عدم قص الأقسام وعرضها بشكل كامل ومتناسق على الهواتف -->
+    <div class="flex items-center gap-2 overflow-x-auto px-1 py-2 scrollbar-none mb-8 justify-start sm:justify-center flex-nowrap" id="categories-container"></div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="products-grid"></div>
   </main>
 
@@ -159,16 +149,16 @@
       <div>
         <h5 id="footer-head-social" class="text-white font-semibold mb-3 text-xs sm:text-sm">تابعنا على وسائل التواصل</h5>
         <div class="flex flex-col gap-2.5 text-xs sm:text-sm text-slate-400">
-          <a id="footer-instagram" href="#" target="_blank" class="hover:text-pink-400 flex items-center gap-2 transition-colors hover:translate-x-1"><i class="fa-brands fa-instagram"></i> <span id="f-link-ig">انستغرام</span></a>
-          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2 transition-colors hover:translate-x-1"><i class="fa-brands fa-facebook"></i> <span id="f-link-fb">فيسبوك</span></a>
-          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2 transition-colors hover:translate-x-1"><i class="fa-brands fa-tiktok"></i> <span id="f-link-tk">تيك توك</span></a>
+          <a id="footer-instagram" href="#" target="_blank" class="hover:text-pink-400 flex items-center gap-2"><i class="fa-brands fa-instagram"></i> <span id="f-link-ig">انستغرام</span></a>
+          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2"><i class="fa-brands fa-facebook"></i> <span id="f-link-fb">فيسبوك</span></a>
+          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2"><i class="fa-brands fa-tiktok"></i> <span id="f-link-tk">تيك توك</span></a>
         </div>
       </div>
       <div>
         <h5 id="footer-head-contact" class="text-white font-semibold mb-3 text-xs sm:text-sm">تواصل معنا</h5>
         <ul class="space-y-2.5 text-xs sm:text-sm text-slate-400">
           <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-amber-400"></i> <span id="f-phone-lbl">هاتف</span>: <span id="footer-phone" class="font-bold text-white" dir="ltr">0778624582</span></li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400"></i> <a id="footer-map-link" href="#" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold transition-colors"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400"></i> <a id="footer-map-link" href="#" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
         </ul>
       </div>
     </div>
@@ -221,25 +211,17 @@
       renderCategories(); renderProducts();
     }
 
-    function changeLanguage(lang) { currentLang = lang; localStorage.setItem("sweety_lang", lang); applyLanguage(); }
+    function changeLanguage(lang) { 
+      currentLang = lang; 
+      localStorage.setItem("sweety_lang", lang); 
+      applyLanguage(); 
+    }
 
     function applyTheme() {
-      const htmlEl = document.documentElement; 
-      const icon = document.getElementById("theme-icon");
-      
-      icon.classList.remove("theme-spin");
-      void icon.offsetWidth; 
-      icon.classList.add("theme-spin");
-
-      if (currentTheme === "dark") { 
-        htmlEl.classList.add("dark"); 
-        htmlEl.classList.remove("light"); 
-        icon.className = "fa-solid fa-sun text-amber-400 theme-spin";
-      } else { 
-        htmlEl.classList.remove("dark"); 
-        htmlEl.classList.add("light"); 
-        icon.className = "fa-solid fa-moon text-slate-700 theme-spin";
-      }
+      const htmlEl = document.documentElement; const icon = document.getElementById("theme-icon");
+      icon.className = currentTheme === "dark" ? "fa-solid fa-sun text-amber-400 theme-spin" : "fa-solid fa-moon text-slate-700 theme-spin";
+      if (currentTheme === "dark") { htmlEl.classList.add("dark"); htmlEl.classList.remove("light"); }
+      else { htmlEl.classList.remove("dark"); htmlEl.classList.add("light"); }
     }
 
     function toggleDarkMode() { 
@@ -264,8 +246,8 @@
 
     function renderCategories() {
       const container = document.getElementById("categories-container");
-      let html = `<button onclick="setCategory('الكل')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm active:scale-95 ${selectedCategory === 'الكل' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat('الكل', currentLang)}</button>`;
-      html += categories.map(cat => `<button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm active:scale-95 ${selectedCategory === cat ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat(cat, currentLang)}</button>`).join('');
+      let html = `<button onclick="setCategory('الكل')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${selectedCategory === 'الكل' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat('الكل', currentLang)}</button>`;
+      html += categories.map(cat => `<button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${selectedCategory === cat ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat(cat, currentLang)}</button>`).join('');
       container.innerHTML = html;
     }
 
@@ -276,7 +258,7 @@
       const filtered = selectedCategory === "الكل" ? products : products.filter(p => p.category === selectedCategory);
       if (filtered.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 font-semibold">${t.noProducts}</div>`; return; }
       grid.innerHTML = filtered.map(p => `
-        <div class="glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-amber-500/15 flex flex-col justify-between group hover:-translate-y-2 transition-all duration-300">
+        <div class="glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between group hover:-translate-y-1.5 transition-all">
           <div class="relative overflow-hidden h-52 sm:h-56">
             <img src="${p.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
             <span class="absolute top-3.5 ltr:right-3.5 rtl:left-3.5 bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-[11px] font-semibold px-3.5 py-1 rounded-full shadow-md">${translateCat(p.category, currentLang)}</span>
