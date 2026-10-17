@@ -166,7 +166,15 @@
           <div class="space-y-1"><label id="lbl-ig" class="text-[11px] text-slate-500 dark:text-slate-400">رابط انستغرام</label><input type="url" id="cfg-ig" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
           <div class="space-y-1"><label id="lbl-fb" class="text-[11px] text-slate-500 dark:text-slate-400">رابط فيسبوك</label><input type="url" id="cfg-fb" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
           <div class="space-y-1"><label id="lbl-tk" class="text-[11px] text-slate-500 dark:text-slate-400">رابط تيك توك</label><input type="url" id="cfg-tk" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white"></div>
-          <div class="space-y-1"><label id="lbl-pwd" class="text-[11px] text-amber-500 font-semibold">Password</label><input type="password" id="cfg-pwd" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-white" placeholder="Password..."></div>
+          <div class="space-y-1">
+            <label id="lbl-pwd" class="text-[11px] text-amber-500 font-semibold">Password</label>
+            <div class="relative w-full">
+              <input type="password" id="cfg-pwd" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 ltr:pr-10 rtl:pl-10 text-xs text-slate-800 dark:text-white" placeholder="Password...">
+              <button type="button" onclick="toggleSettingsPasswordVisibility()" class="absolute inset-y-0 ltr:right-3 rtl:left-3 flex items-center text-slate-400 hover:text-amber-400 text-xs">
+                <i id="settings-eye-icon" class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="flex justify-start pt-1">
           <button onclick="saveSettings()" id="btn-save-set" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs shadow-md active:scale-95 transition-transform">حفظ الإعدادات</button>
@@ -485,6 +493,18 @@
       const icon = document.getElementById("eye-icon");
       if (input.type === "password") { input.type = "text"; icon.className = "fa-solid fa-eye-slash"; }
       else { input.type = "password"; icon.className = "fa-solid fa-eye"; }
+    }
+
+    function toggleSettingsPasswordVisibility() {
+      const input = document.getElementById("cfg-pwd");
+      const icon = document.getElementById("settings-eye-icon");
+      if (input.type === "password") { 
+        input.type = "text"; 
+        icon.className = "fa-solid fa-eye-slash"; 
+      } else { 
+        input.type = "password"; 
+        icon.className = "fa-solid fa-eye"; 
+      }
     }
 
     function submitAdminLogin() {
