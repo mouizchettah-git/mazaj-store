@@ -530,7 +530,58 @@
       applyAdminLang();
     }
 
-    function saveSettings() {
+    // دالة مساعدة لرفع أي تحديثات كملف JSON لمستودع جيت هاب لتتم المزامنة بين الأجهزة
+    async function syncDataToGitHub(filePath, jsonData, successMsg) {
+      const tokenToUse = siteSettings.password || "";
+      localStorage.setItem("sweety_settings", JSON.stringify(siteSettings));
+      localStorage.setItem("sweety_categories", JSON.stringify(categories));
+      localStorage.setItem("sweety_products", JSON.stringify(products));
+
+      if (!tokenToUse) {
+        alert(successMsg);
+        return;
+      }
+
+      const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${filePath}`;
+      
+      try {
+        // الخطوة 1: جلب الـ sha الحالي للملف لكي نسمح بالتعديل (Update) عبر GitHub API
+        let sha = "";
+        const getRes = await fetch(url, {
+          headers: { "Authorization": `token ${tokenToUse}` }
+        });
+        if (getRes.ok) {
+          const fileData = await getRes.json();
+          sha = fileData.sha;
+        }
+
+        // الخطوة 2: تحويل البيانات إلى Base64 ورفعها
+        const jsonString = JSON.stringify(jsonData, null, 2);
+        const base64Content = btoa(unescape(encodeURIComponent(jsonString)));
+
+        const bodyData = {
+          message: `Update ${filePath} from Admin Dashboard`,
+          content: base64Content
+        };
+        if (sha) bodyData.sha = sha;
+
+        const putRes = await fetch(url, {
+          method: "PUT",
+          headers: { "Authorization": `token ${tokenToUse}`, "Content-Type": "application/json" },
+          body: JSON.stringify(bodyData)
+        });
+
+        if (putRes.ok) {
+          alert(successMsg + " (تمت المزامنة مع GitHub بنجاح!)");
+        } else {
+          alert(successMsg + " (تم الحفظ محلياً، فشلت المزامنة السحابية تحقق من صحة الـ Token)");
+        }
+      } catch (err) {
+        alert(successMsg + " (تم الحفظ محلياً)");
+      }
+    }
+
+    async function saveSettings() {
       siteSettings.phone = document.getElementById("cfg-phone").value.trim();
       siteSettings.address = document.getElementById("cfg-address").value.trim();
       siteSettings.mapUrl = document.getElementById("cfg-map").value.trim();
@@ -538,8 +589,9 @@
       siteSettings.facebook = document.getElementById("cfg-fb").value.trim();
       siteSettings.tiktok = document.getElementById("cfg-tk").value.trim();
       siteSettings.password = document.getElementById("cfg-pwd").value.trim();
-      localStorage.setItem("sweety_settings", JSON.stringify(siteSettings));
-      alert("تم حفظ الإعدادات بنجاح!");
+      
+      // حفظ ومزامنة الإعدادات
+      await syncDataToGitHub("data/settings.json", siteSettings, "تم حفظ الإعدادات بنجاح!");
     }
 
     async function uploadImageToGitHub(file) {
@@ -594,19 +646,23 @@
       `).join('');
     }
 
-    function addCategory() {
+    async function addCategory() {
       const input = document.getElementById("new-cat-input");
       const val = input.value.trim();
       if (!val || categories.includes(val)) return;
       categories.push(val);
-      localStorage.setItem("sweety_categories", JSON.stringify(categories));
       input.value = "";
+      
+      // مزامنة الأقسام وحفظها
+      await syncDataToGitHub("data/categories.json", categories, "تمت إضافة القسم بنجاح!");
       initAdminPanel();
     }
 
-    function deleteCategory(idx) {
+    async function deleteCategory(idx) {
       categories.splice(idx, 1);
-      localStorage.setItem("sweety_categories", JSON.stringify(categories));
+      
+      // مزامنة الأقسام وحفظها بعد الحذف
+      await syncDataToGitHub("data/categories.json", categories, "تم حذف القسم بنجاح!");
       initAdminPanel();
     }
 
@@ -628,14 +684,16 @@
       }
 
       products.unshift({ id: Date.now(), name, price, category, image, desc: desc || "وصف مميز للمنتج" });
-      localStorage.setItem("sweety_products", JSON.stringify(products));
+      
+      // مزامنة المنتجات وحفظها في جيت هاب
+      await syncDataToGitHub("data/products.json", products, "تمت إضافة المنتج بنجاح وتحديث المتجر!");
+
       document.getElementById("p-name").value = "";
       document.getElementById("p-price").value = "";
       if (fileInput) fileInput.value = "";
       document.getElementById("p-file-label").innerText = adminI18n[currentLang].fileDefault;
       document.getElementById("p-desc").value = "";
       renderAdminProducts();
-      alert("تمت إضافة المنتج بنجاح!");
     }
 
     function openEditProductModal(id) {
@@ -670,16 +728,19 @@
       p.category = document.getElementById("edit-p-category").value;
       p.desc = document.getElementById("edit-p-desc").value.trim() || p.desc;
 
-      localStorage.setItem("sweety_products", JSON.stringify(products));
+      // مزامنة التعديلات على المنتجات في جيت هاب
+      await syncDataToGitHub("data/products.json", products, "تم تعديل المنتج بنجاح وتحديثه في المستودع!");
+
       closeModal("modal-edit-product");
       renderAdminProducts();
-      alert("تم تعديل المنتج بنجاح!");
     }
 
-    function deleteProduct(id) {
+    async function deleteProduct(id) {
       if (confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
         products = products.filter(p => p.id !== id);
-        localStorage.setItem("sweety_products", JSON.stringify(products));
+        
+        // مزامنة قائمة المنتجات بعد الحذف
+        await syncDataToGitHub("data/products.json", products, "تم حذف المنتج بنجاح وتحديث المستودع!");
         renderAdminProducts();
       }
     }
