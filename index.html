@@ -9,13 +9,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
+    body { font-family: 'Readex Pro', 'Outfit', sans-serif; overflow-x: hidden; }
     h1, h2, h3, .luxury-title { font-family: 'Outfit', 'Readex Pro', sans-serif; letter-spacing: -0.02em; }
     [lang="en"] body, [lang="fr"] body { font-family: 'Outfit', sans-serif; }
-    
-    button, a, input, select, textarea, .glass-card { 
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-    }
     
     .glass-nav { 
       background: rgba(15, 23, 42, 0.95); 
@@ -35,6 +31,7 @@
       backdrop-filter: blur(16px); 
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08); 
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .light .glass-card { 
       background: rgba(255, 255, 255, 0.9); 
@@ -52,7 +49,7 @@
       opacity: 0; 
       visibility: hidden; 
       transform: translateY(-8px) scale(0.95); 
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+      transition: all 0.25s ease; 
       z-index: 99999; 
     }
     .custom-dropdown.open .custom-dropdown-menu { 
@@ -61,15 +58,11 @@
       transform: translateY(0) scale(1); 
     }
     
-    .theme-spin { animation: spinOnce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .theme-spin { animation: spinOnce 0.4s ease-out; }
     @keyframes spinOnce { 0% { transform: rotate(0deg) scale(0.8); } 100% { transform: rotate(360deg) scale(1); } }
 
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
   </style>
 </head>
 <body class="bg-gradient-to-br from-amber-50/60 via-orange-50/40 to-rose-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 min-h-screen text-slate-800 dark:text-slate-100 flex flex-col antialiased selection:bg-amber-500 selection:text-white">
@@ -84,9 +77,9 @@
         </a>
       </div>
       <div class="flex items-center gap-2.5 text-xs sm:text-sm">
-        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400"><i class="fa-brands fa-instagram"></i></a>
-        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-facebook"></i></a>
-        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300"><i class="fa-brands fa-tiktok"></i></a>
+        <a id="link-instagram" href="https://www.instagram.com/mazaj.biskra/" target="_blank" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+        <a id="link-facebook" href="#" target="_blank" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-facebook"></i></a>
+        <a id="link-tiktok" href="#" target="_blank" class="hover:text-slate-300 transition-colors"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
   </div>
@@ -112,13 +105,13 @@
             <i class="fa-solid fa-chevron-down text-[8px] text-amber-500"></i>
           </button>
           <div class="custom-dropdown-menu glass-card bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-1.5 border border-slate-200 dark:border-slate-800">
-            <button onclick="changeLanguage('ar')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">العربية <span>🇸🇦</span></button>
-            <button onclick="changeLanguage('en')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">English <span>🇬🇧</span></button>
-            <button onclick="changeLanguage('fr')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between">Français <span>🇫🇷</span></button>
+            <button onclick="changeLanguage('ar')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">العربية <span>🇸🇦</span></button>
+            <button onclick="changeLanguage('en')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">English <span>🇬🇧</span></button>
+            <button onclick="changeLanguage('fr')" class="w-full text-start px-3 py-2 rounded-xl text-xs font-semibold hover:bg-amber-500 hover:text-white flex items-center justify-between transition-colors">Français <span>🇫🇷</span></button>
           </div>
         </div>
 
-        <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center">
+        <button onclick="toggleDarkMode()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100/80 dark:bg-slate-800/90 text-slate-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-slate-700 border border-amber-300/60 dark:border-slate-700 shadow-sm flex items-center justify-center active:scale-95 transition-transform">
           <i id="theme-icon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
         </button>
       </div>
@@ -134,7 +127,6 @@
 
   <!-- Main Catalog Grid -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
-    <!-- تم تعديل الكلاسات لضمان عدم قص الأقسام وعرضها بشكل كامل ومتناسق على الهواتف -->
     <div class="flex items-center gap-2 overflow-x-auto px-1 py-2 scrollbar-none mb-8 justify-start sm:justify-center flex-nowrap" id="categories-container"></div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="products-grid"></div>
   </main>
@@ -149,16 +141,16 @@
       <div>
         <h5 id="footer-head-social" class="text-white font-semibold mb-3 text-xs sm:text-sm">تابعنا على وسائل التواصل</h5>
         <div class="flex flex-col gap-2.5 text-xs sm:text-sm text-slate-400">
-          <a id="footer-instagram" href="#" target="_blank" class="hover:text-pink-400 flex items-center gap-2"><i class="fa-brands fa-instagram"></i> <span id="f-link-ig">انستغرام</span></a>
-          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2"><i class="fa-brands fa-facebook"></i> <span id="f-link-fb">فيسبوك</span></a>
-          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2"><i class="fa-brands fa-tiktok"></i> <span id="f-link-tk">تيك توك</span></a>
+          <a id="footer-instagram" href="#" target="_blank" class="hover:text-pink-400 flex items-center gap-2 transition-colors"><i class="fa-brands fa-instagram"></i> <span id="f-link-ig">انستغرام</span></a>
+          <a id="footer-facebook" href="#" target="_blank" class="hover:text-blue-400 flex items-center gap-2 transition-colors"><i class="fa-brands fa-facebook"></i> <span id="f-link-fb">فيسبوك</span></a>
+          <a id="footer-tiktok" href="#" target="_blank" class="hover:text-slate-200 flex items-center gap-2 transition-colors"><i class="fa-brands fa-tiktok"></i> <span id="f-link-tk">تيك توك</span></a>
         </div>
       </div>
       <div>
         <h5 id="footer-head-contact" class="text-white font-semibold mb-3 text-xs sm:text-sm">تواصل معنا</h5>
         <ul class="space-y-2.5 text-xs sm:text-sm text-slate-400">
           <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-amber-400"></i> <span id="f-phone-lbl">هاتف</span>: <span id="footer-phone" class="font-bold text-white" dir="ltr">0778624582</span></li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400"></i> <a id="footer-map-link" href="#" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-rose-400"></i> <a id="footer-map-link" href="#" target="_blank" class="underline text-amber-400 hover:text-amber-300 font-semibold transition-colors"><span id="f-addr-lbl">حي الزمالة، بسكرة</span> ↗</a></li>
         </ul>
       </div>
     </div>
@@ -173,7 +165,21 @@
       "شاي ومشروبات": { ar: "شاي ومشروبات", en: "Tea & Beverages", fr: "Thé & Boissons" },
       "مكسرات وسكريات": { ar: "مكسرات وسكريات", en: "Nuts & Sweets", fr: "Fruits Secs & Douceurs" }
     };
-    function translateCat(catName, lang) { return (categoryTranslations[catName] && categoryTranslations[catName][lang]) ? categoryTranslations[catName][lang] : catName; }
+    
+    function translateCat(catName, lang) {
+      if (!catName) return catName;
+      // إذا كانت مطابقة مباشرة في القاموس
+      if (categoryTranslations[catName] && categoryTranslations[catName][lang]) {
+        return categoryTranslations[catName][lang];
+      }
+      // البحث العكسي في حال كان الاسم مخزناً بلغة أخرى
+      for (let key in categoryTranslations) {
+        if (categoryTranslations[key].ar === catName || categoryTranslations[key].en === catName || categoryTranslations[key].fr === catName) {
+          return categoryTranslations[key][lang] || catName;
+        }
+      }
+      return catName;
+    }
 
     const i18n = {
       ar: { brandSub: "مشروبات • عصائر طبيعية • قهوة", heroBadge: "✨ لحظة حلوة، مزاج أفضل", heroTitle: "قائمة تحليات وعصائر مزاج الطازجة ☕🍹", heroSubtitle: "تصفح الكايتالوج الفاخر، واستمتع بتشكيلتنا المتميزة.", footerDesc: "شاي ومكسرات وعصائر طبيعية وتحلية طازجة تحلّي أوقاتك في بسكرة.", footerSocial: "تابعنا على وسائل التواصل", footerContact: "تواصل معنا", fIg: "انستغرام", fFb: "فيسبوك", fTk: "تيك توك", fPhone: "هاتف التوصيل", fAddr: "حي الزمالة، بسكرة", footerCopy: "© 2026 جميع الحقوق محفوظة لـ متجر مزاج (Mazaj Biskra)", priceLbl: "السعر", noProducts: "لا توجد منتجات في هذا القسم حالياً." },
@@ -218,10 +224,23 @@
     }
 
     function applyTheme() {
-      const htmlEl = document.documentElement; const icon = document.getElementById("theme-icon");
-      icon.className = currentTheme === "dark" ? "fa-solid fa-sun text-amber-400 theme-spin" : "fa-solid fa-moon text-slate-700 theme-spin";
-      if (currentTheme === "dark") { htmlEl.classList.add("dark"); htmlEl.classList.remove("light"); }
-      else { htmlEl.classList.remove("dark"); htmlEl.classList.add("light"); }
+      const htmlEl = document.documentElement; 
+      const icon = document.getElementById("theme-icon");
+      
+      if (icon) {
+        icon.classList.remove("theme-spin");
+        void icon.offsetWidth; 
+        icon.classList.add("theme-spin");
+        icon.className = currentTheme === "dark" ? "fa-solid fa-sun text-amber-400 theme-spin" : "fa-solid fa-moon text-slate-700 theme-spin";
+      }
+
+      if (currentTheme === "dark") { 
+        htmlEl.classList.add("dark"); 
+        htmlEl.classList.remove("light"); 
+      } else { 
+        htmlEl.classList.remove("dark"); 
+        htmlEl.classList.add("light"); 
+      }
     }
 
     function toggleDarkMode() { 
@@ -246,8 +265,11 @@
 
     function renderCategories() {
       const container = document.getElementById("categories-container");
-      let html = `<button onclick="setCategory('الكل')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${selectedCategory === 'الكل' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat('الكل', currentLang)}</button>`;
-      html += categories.map(cat => `<button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${selectedCategory === cat ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat(cat, currentLang)}</button>`).join('');
+      let html = `<button onclick="setCategory('الكل')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${selectedCategory === 'الكل' || selectedCategory === 'All' || selectedCategory === 'Tous' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat('الكل', currentLang)}</button>`;
+      html += categories.map(cat => {
+        const isSelected = (selectedCategory === cat || translateCat(selectedCategory, 'ar') === cat);
+        return `<button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all shadow-sm flex-shrink-0 ${isSelected ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25 scale-105' : 'glass-card text-slate-700 dark:text-slate-300 hover:border-amber-400'}">${translateCat(cat, currentLang)}</button>`;
+      }).join('');
       container.innerHTML = html;
     }
 
@@ -255,8 +277,13 @@
 
     function renderProducts() {
       const t = i18n[currentLang]; const grid = document.getElementById("products-grid");
-      const filtered = selectedCategory === "الكل" ? products : products.filter(p => p.category === selectedCategory);
-      if (filtered.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 font-semibold">${t.noProducts}</div>`; return; }
+      const filtered = (selectedCategory === "الكل" || selectedCategory === "All" || selectedCategory === "Tous") ? products : products.filter(p => p.category === selectedCategory || translateCat(p.category, currentLang) === translateCat(selectedCategory, currentLang));
+      
+      if (filtered.length === 0) { 
+        grid.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 font-semibold">${t.noProducts}</div>`; 
+        return; 
+      }
+      
       grid.innerHTML = filtered.map(p => `
         <div class="glass-card rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col justify-between group hover:-translate-y-1.5 transition-all">
           <div class="relative overflow-hidden h-52 sm:h-56">
