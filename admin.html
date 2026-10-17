@@ -530,22 +530,30 @@
       applyAdminLang();
     }
 
-    // دالة مساعدة لرفع أي تحديثات كملف JSON لمستودع جيت هاب لتتم المزامنة بين الأجهزة
+    // [تم التعديل بذكاء]: دالة مساعدة لرفع أي تحديثات كملف JSON لمستودع جيت هاب لضمان قراءة التوكن المكتوب في الحقل مباشرة
     async function syncDataToGitHub(filePath, jsonData, successMsg) {
-      const tokenToUse = siteSettings.password || "";
+      const tokenToUse = document.getElementById("cfg-pwd").value.trim() || siteSettings.password || "";
+
+      siteSettings.phone = document.getElementById("cfg-phone").value.trim();
+      siteSettings.address = document.getElementById("cfg-address").value.trim();
+      siteSettings.mapUrl = document.getElementById("cfg-map").value.trim();
+      siteSettings.instagram = document.getElementById("cfg-ig").value.trim();
+      siteSettings.facebook = document.getElementById("cfg-fb").value.trim();
+      siteSettings.tiktok = document.getElementById("cfg-tk").value.trim();
+      siteSettings.password = tokenToUse;
+
       localStorage.setItem("sweety_settings", JSON.stringify(siteSettings));
       localStorage.setItem("sweety_categories", JSON.stringify(categories));
       localStorage.setItem("sweety_products", JSON.stringify(products));
 
       if (!tokenToUse) {
-        alert(successMsg);
+        alert(successMsg + " (ملاحظة: لم تقم بإدخال الـ Token لذا تم الحفظ محلياً فقط)");
         return;
       }
 
       const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${filePath}`;
       
       try {
-        // الخطوة 1: جلب الـ sha الحالي للملف لكي نسمح بالتعديل (Update) عبر GitHub API
         let sha = "";
         const getRes = await fetch(url, {
           headers: { "Authorization": `token ${tokenToUse}` }
@@ -555,7 +563,6 @@
           sha = fileData.sha;
         }
 
-        // الخطوة 2: تحويل البيانات إلى Base64 ورفعها
         const jsonString = JSON.stringify(jsonData, null, 2);
         const base64Content = btoa(unescape(encodeURIComponent(jsonString)));
 
@@ -572,30 +579,22 @@
         });
 
         if (putRes.ok) {
-          alert(successMsg + " (تمت المزامنة مع GitHub بنجاح!)");
+          alert(successMsg + " وتمت المزامنة السحابية بنجاح 🚀");
         } else {
-          alert(successMsg + " (تم الحفظ محلياً، فشلت المزامنة السحابية تحقق من صحة الـ Token)");
+          const errData = await putRes.json();
+          alert("تم الحفظ محلياً، فشلت المزامنة السحابية: " + (errData.message || "تحقق من صحة الـ Token"));
         }
       } catch (err) {
-        alert(successMsg + " (تم الحفظ محلياً)");
+        alert(successMsg + " (تم الحفظ محلياً، خطأ في الاتصال)");
       }
     }
 
     async function saveSettings() {
-      siteSettings.phone = document.getElementById("cfg-phone").value.trim();
-      siteSettings.address = document.getElementById("cfg-address").value.trim();
-      siteSettings.mapUrl = document.getElementById("cfg-map").value.trim();
-      siteSettings.instagram = document.getElementById("cfg-ig").value.trim();
-      siteSettings.facebook = document.getElementById("cfg-fb").value.trim();
-      siteSettings.tiktok = document.getElementById("cfg-tk").value.trim();
-      siteSettings.password = document.getElementById("cfg-pwd").value.trim();
-      
-      // حفظ ومزامنة الإعدادات
       await syncDataToGitHub("data/settings.json", siteSettings, "تم حفظ الإعدادات بنجاح!");
     }
 
     async function uploadImageToGitHub(file) {
-      const tokenToUse = siteSettings.password || "";
+      const tokenToUse = document.getElementById("cfg-pwd").value.trim() || siteSettings.password || "";
       if (!tokenToUse) {
         return new Promise((resolve) => {
           const reader = new FileReader();
